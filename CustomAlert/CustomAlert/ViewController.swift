@@ -38,13 +38,19 @@ class ViewController: UIViewController {
     
     // MARK: ------------------- IBAction functions -------------------
     @objc func btnAlrtAction(_ sender: UIButton) {
-        guard let title = sender.configuration?.title, let style = alrtStyle(rawValue: title) else { return }
+        guard let title = sender.configuration?.title,
+              let ttSbtr = title.split(separator: ".").first,
+              let style = alrtStyle(rawValue: title) else { return }
+        
+        let ttStr = String(describing: ttSbtr)
+        
         print("--> \(title) tag = \(sender.tag) / in btnAlrtAction\n")
         artActs.removeAll()
         
         switch style {
         case .basic:
-            artTp = (String(describing: title.split(separator: ".").first ?? ""), title)
+            artTp = ("\(ttStr)",
+            "\(title)")
             
             for (i, _) in tblArr.enumerated() {
                 artActs.append(.init(title: "sys \(i)",
@@ -54,7 +60,17 @@ class ViewController: UIViewController {
             
             showAlertVC()
         
-        case .custom:
+        case .csXib:
+            let csXibVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CsXibVC") as! CsXibVC
+            csXibVC.modalPresentationStyle = .overFullScreen
+            csXibVC.artTp = artTp
+            
+            present(csXibVC, animated: true)
+        
+        case .csCode:
+            break
+        
+        case .csSfUi:
             break
         }
     }
@@ -113,7 +129,7 @@ class ViewController: UIViewController {
 
 2. 알림창 스타일
 \(alrtStyle.basic.rawValue)
-\(alrtStyle.custom.rawValue)
+\(alrtStyle.csXib.rawValue)
 """
         showAlertVC(useDef: true)
     }
@@ -141,15 +157,23 @@ class tvcCell: UITableViewCell {
 
 enum alrtStyle: String {
     case basic  = "알림1. 시스템 기본스타일"
-    case custom = "알림2. 커스텀 스타일"
+    case csXib = "알림2. 커스텀 스타일 / xib"
+    case csCode = "알림2. 커스텀 스타일 / code"
+    case csSfUi = "알림2. 커스텀 스타일 / SwiftUI"
     
     init?(rawValue: String) {
         switch rawValue {
         case alrtStyle.basic.rawValue:
             self = .basic
             
-        case alrtStyle.custom.rawValue:
-            self = .custom
+        case alrtStyle.csXib.rawValue:
+            self = .csXib
+            
+        case alrtStyle.csCode.rawValue:
+            self = .csCode
+            
+        case alrtStyle.csSfUi.rawValue:
+            self = .csSfUi
             
         default:
             return nil
@@ -158,62 +182,4 @@ enum alrtStyle: String {
     }
 }
 
-extension UIView {
-    @IBInspectable var cornerRadi: CGFloat {
-        get {
-            layer.cornerRadius
-        }
-        
-        set {
-            clipsToBounds = true
-            layer.cornerRadius = newValue
-            layoutSubviews()
-        }
-    }
-    
-    @IBInspectable var brdWidth: CGFloat {
-        get {
-            layer.borderWidth
-        }
-        
-        set {
-            layer.borderWidth = newValue
-            layoutSubviews()
-        }
-    }
-    
-    @IBInspectable var brdCol: UIColor {
-        get {
-            if let col = layer.borderColor {
-                return UIColor(cgColor: col)
 
-            } else {
-                return .clear
-            }
-        }
-        
-        set {
-            layer.borderColor = newValue.cgColor
-            layoutSubviews()
-        }
-    }
-    
-    func setBorder(width: CGFloat = 1, radi: CGFloat = 10, col: UIColor) {
-        layer.borderWidth   = width
-        layer.borderColor   = col.cgColor
-        layer.cornerRadius  = radi
-    }
-    
-    @IBInspectable var isCircle: Bool {
-        get {
-            layoutSubviews()
-            return layer.cornerRadius == layer.frame.height / 2
-        }
-        
-        set {
-            clipsToBounds = newValue
-            layer.cornerRadius = newValue ? layer.frame.height / 2 : 0
-            layoutSubviews()
-        }
-    }
-}
