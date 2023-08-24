@@ -11,24 +11,40 @@ class CsXibVC: useDimBgVC {
     
     // MARK: ------------------- IBOutlets -------------------
     
-    @IBOutlet weak var tblView: UITableView!
-    @IBOutlet weak var tblHeight: NSLayoutConstraint!
+    @IBOutlet weak var colV: UICollectionView!
+    @IBOutlet weak var cvHeight: NSLayoutConstraint!
     var btnTitleArr: [String] = []
     
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblMsg: UILabel!
-    @IBOutlet weak var contV_titMsgHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var containerView: UIStackView!
+    @IBOutlet weak var ctTop: NSLayoutConstraint!
+    @IBOutlet weak var ctBtm: NSLayoutConstraint!
+    
+    @IBOutlet weak var contV_titMsgHeight: NSLayoutConstraint!
+    @IBOutlet weak var contV_WidthRatio: NSLayoutConstraint!
+    
+    var defCellHgt: CGFloat = 50
+    lazy var tblHeightVal: CGFloat = CGFloat(btnTitleArr.count) * defCellHgt
+    
+    var titMsgViewFull: CGFloat = 1.0
+    var titMsgViewMax: CGFloat = 0.6
     
     // MARK: ------------------- Variables -------------------
+    lazy var csXViewNums: CsViewNums = .init(csWidthRatio: 0.8,
+                                             defMrgVerti: view.frame.height * 0.05,
+                                             tblDefRatio: tblHeightVal == 0 ? titMsgViewFull : titMsgViewMax)
+    
     var artTp: (title: String, msg: String) = ("", "")
     
     var lblTitleHeight: CGFloat = 20 {
         didSet {
-            tblHeight.constant          = CGFloat(btnTitleArr.count * 50)
-            let tblIsHide: Bool         = tblHeight.constant == 0
+            let defMrgVerti: CGFloat    = csXViewNums.defMrgVerti * 2
             
-            let mxHeight: CGFloat       = (view.frame.height - 20) * (tblIsHide ? 1.0 : 0.6)
+            cvHeight.constant          = tblHeightVal
+            
+            let mxHeight: CGFloat       = (view.frame.height - defMrgVerti) * csXViewNums.tblDefRatio
             let height: CGFloat         = lblMsg.frame.maxY + 16
             
             contV_titMsgHeight.constant = height > mxHeight ? mxHeight : height
@@ -53,8 +69,17 @@ class CsXibVC: useDimBgVC {
     override func setView(fcn: String = #function, lne: Int = #line, spot: String = #fileID) {
         super.setView(fcn: fcn, lne: lne, spot: spot)
         
-        lblTitle.text = artTp.title
-        lblMsg.text = artTp.msg
+        let newConst = contV_WidthRatio.setConstMultiplier(csXViewNums.csWidthRatio)
+        view.removeConstraint(contV_WidthRatio)
+        view.addConstraint(newConst)
+        view.layoutIfNeeded()
+        contV_WidthRatio = newConst
+        
+        ctTop.constant = csXViewNums.defMrgVerti
+        ctBtm.constant = csXViewNums.defMrgVerti
+        
+        lblTitle.text   = artTp.title
+        lblMsg.text     = artTp.msg
         
     }
     
@@ -75,3 +100,42 @@ class CsXibVC: useDimBgVC {
     */
 
 }
+
+// MARK: ------------------- collectionView -------------------
+extension CsXibVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return btnTitleArr.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width: CGFloat  = collectionView.frame.size.width / 2
+        let height: CGFloat = defCellHgt
+        
+        return .init(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CsXibCvc", for: indexPath) as! CsXibCvc
+        cell.tag = indexPath.item
+        
+        cell.backgroundColor = .getRainb(idx: indexPath.item)
+        
+        return cell
+    }
+    
+}
+
+class CsXibCvc: UICollectionViewCell {
+    @IBOutlet weak var lbl_title: UILabel!
+}
+
+struct CsViewNums {
+    /// superView 대비 뷰 너비 비율
+    var csWidthRatio: CGFloat
+    
+    /// 기본 컨테이너 뷰 상하 마진
+    var defMrgVerti: CGFloat
+    
+    var tblDefRatio: CGFloat
+}
+

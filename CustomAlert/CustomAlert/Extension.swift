@@ -7,6 +7,16 @@
 
 import Foundation
 import UIKit
+extension UIColor {
+    static var rnbArr: [UIColor] {
+        return [ #colorLiteral(red: 0.9696283937, green: 0.6695007682, blue: 0.6676803827, alpha: 1), #colorLiteral(red: 0.9693056941, green: 0.80732009, blue: 0.6801192227, alpha: 1), #colorLiteral(red: 0.9686325192, green: 0.9686235785, blue: 0.7270812988, alpha: 1), #colorLiteral(red: 0.6864650249, green: 0.9122212529, blue: 0.6367678046, alpha: 1), #colorLiteral(red: 0.6401560903, green: 0.7926994562, blue: 0.9350081682, alpha: 1) ]
+    }
+    
+    static func getRainb(idx: Int) -> UIColor {
+        return rnbArr[idx % rnbArr.count]
+    }
+}
+
 
 extension UIView {
     @IBInspectable var cornerRadi: CGFloat {
@@ -65,6 +75,12 @@ extension UIView {
     }
     
    
+}
+
+extension NSLayoutConstraint {
+    func setConstMultiplier(_ multiplier: CGFloat) -> NSLayoutConstraint {
+        return NSLayoutConstraint(item: self.firstItem!, attribute: self.firstAttribute, relatedBy: self.relation, toItem: self.secondItem, attribute: self.secondAttribute, multiplier: multiplier, constant: self.constant)
+    }
 }
 
 extension String {

@@ -72,6 +72,10 @@ class ViewController: UIViewController {
             let csXibVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CsXibVC") as! CsXibVC
             csXibVC.modalPresentationStyle = .overFullScreen
             csXibVC.artTp = artTp
+
+            for (i, _) in tblArr.enumerated() {
+                csXibVC.btnTitleArr.append("cst 2-1. \(i)")
+            }
             
             present(csXibVC, animated: true)
         
@@ -165,9 +169,9 @@ class tvcCell: UITableViewCell {
 
 enum alrtStyle: String {
     case basic  = "알림1. 시스템 기본스타일"
-    case csXib = "알림2. 커스텀 스타일 / xib"
-    case csCode = "알림2. 커스텀 스타일 / code"
-    case csSfUi = "알림2. 커스텀 스타일 / SwiftUI"
+    case csXib = "알림2-1. 커스텀 스타일 / xib"
+    case csCode = "알림2-2. 커스텀 스타일 / code"
+    case csSfUi = "알림2-3. 커스텀 스타일 / SwiftUI"
     
     init?(rawValue: String) {
         switch rawValue {

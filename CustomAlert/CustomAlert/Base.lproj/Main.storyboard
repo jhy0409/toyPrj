@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -134,19 +135,19 @@
                                         <rect key="frame" x="0.0" y="590.33333333333337" width="361" height="40"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="알림2. 커스텀 스타일"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="알림2. 커스텀 스타일 / xib"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="알림2-1. 커스텀 스타일 / xib"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vhn-MN-1ub">
                                         <rect key="frame" x="0.0" y="640.33333333333337" width="361" height="34.333333333333371"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="알림2. 커스텀 스타일"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="알림2. 커스텀 스타일 / code"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="알림2-2. 커스텀 스타일 / code"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RHo-Xt-RSE">
                                         <rect key="frame" x="0.0" y="684.66666666666663" width="361" height="34.333333333333371"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="알림2. 커스텀 스타일"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="알림2. 커스텀 스타일 / SwiftUI"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="알림2-3. 커스텀 스타일 / SwiftUI"/>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -187,7 +188,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8c5-cJ-Ccf">
-                                <rect key="frame" x="29.333333333333343" y="394" width="334.33333333333326" height="89"/>
+                                <rect key="frame" x="29.333333333333343" y="344" width="334.33333333333326" height="189"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dU2-Ra-1GP">
                                         <rect key="frame" x="0.0" y="0.0" width="334.33333333333331" height="89"/>
@@ -230,13 +231,47 @@
                                             <constraint firstAttribute="bottom" secondItem="Rwg-Mg-8IF" secondAttribute="bottom" id="vPL-6X-d0S"/>
                                         </constraints>
                                     </view>
-                                    <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="DfN-e0-XyY">
-                                        <rect key="frame" x="0.0" y="0.0" width="334.33333333333331" height="300"/>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZpC-Sa-4d6">
+                                        <rect key="frame" x="0.0" y="89" width="334.33333333333331" height="100"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="300" id="M7W-sD-Pss"/>
+                                            <constraint firstAttribute="height" constant="100" id="i48-ft-J2m"/>
                                         </constraints>
-                                    </tableView>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="7TU-Sq-kzh">
+                                            <size key="itemSize" width="334" height="100"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CsXibCvc" id="qnS-nP-nAP" customClass="CsXibCvc" customModule="CustomAlert" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="apX-sZ-mJY">
+                                                    <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rt4-8a-nlV">
+                                                            <rect key="frame" x="16" y="15" width="302" height="20.333333333333329"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="rt4-8a-nlV" firstAttribute="leading" secondItem="apX-sZ-mJY" secondAttribute="leading" constant="16" id="L2l-ks-bq0"/>
+                                                        <constraint firstAttribute="trailing" secondItem="rt4-8a-nlV" secondAttribute="trailing" constant="16" id="bwv-f7-Gc4"/>
+                                                        <constraint firstItem="rt4-8a-nlV" firstAttribute="centerY" secondItem="apX-sZ-mJY" secondAttribute="centerY" id="u11-wq-5Vc"/>
+                                                    </constraints>
+                                                </collectionViewCellContentView>
+                                                <size key="customSize" width="334" height="50"/>
+                                            </collectionViewCell>
+                                        </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="IBd-0w-tv0" id="ZxL-c0-GWC"/>
+                                            <outlet property="delegate" destination="IBd-0w-tv0" id="18F-6T-sFp"/>
+                                        </connections>
+                                    </collectionView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -263,11 +298,15 @@
                     </view>
                     <size key="freeformSize" width="393" height="852"/>
                     <connections>
+                        <outlet property="colV" destination="ZpC-Sa-4d6" id="NSa-xO-Amf"/>
+                        <outlet property="contV_WidthRatio" destination="DjB-TY-TSd" id="IfS-3B-qfC"/>
                         <outlet property="contV_titMsgHeight" destination="PLO-tj-qYh" id="JWh-Sj-1Vn"/>
+                        <outlet property="containerView" destination="8c5-cJ-Ccf" id="3fx-Z5-OIH"/>
+                        <outlet property="ctBtm" destination="utI-fe-hKy" id="CuO-wS-UPY"/>
+                        <outlet property="ctTop" destination="Vn2-83-Td4" id="eNf-vK-vp0"/>
+                        <outlet property="cvHeight" destination="i48-ft-J2m" id="g8c-R3-WgB"/>
                         <outlet property="lblMsg" destination="F25-bP-7tI" id="ShN-9d-fVy"/>
                         <outlet property="lblTitle" destination="1iV-il-yZM" id="ffP-AO-kBu"/>
-                        <outlet property="tblHeight" destination="M7W-sD-Pss" id="INa-iL-lFC"/>
-                        <outlet property="tblView" destination="DfN-e0-XyY" id="CUF-Vz-Tec"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o18-qO-JsK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
