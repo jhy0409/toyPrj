@@ -67,7 +67,24 @@ extension UIView {
    
 }
 
-class useDimBgVC: UIViewController {
+extension String {
+    var fileName: String {
+        var res: String = ""
+        
+        res = String(describing: self.split(separator: "/").last?.split(separator: ".").first ?? "")
+        return res
+    }
+    
+    
+}
+
+class CommonVC: UIViewController {
+    func setView(fcn: String = #function, lne: Int = #line, spot: String = #fileID) {
+        print("--> spot = \(fcn)\t[ \(lne) ] / in \(spot.fileName)\n")
+    }
+}
+
+class useDimBgVC: CommonVC {
     
     func setDimBg(_ isAppear: Bool = true) {
         UIView.animate(withDuration: isAppear ? 0.3 : 0, delay: isAppear ? 0.3 : 0) {
@@ -75,12 +92,21 @@ class useDimBgVC: UIViewController {
         }
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setDimBg()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        
+        setView()
+    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -97,3 +123,5 @@ class useDimBgVC: UIViewController {
         }
     }
 }
+
+// MARK: ------------------- Protocol -------------------

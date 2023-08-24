@@ -42,16 +42,23 @@ class ViewController: UIViewController {
               let ttSbtr = title.split(separator: ".").first,
               let style = alrtStyle(rawValue: title) else { return }
         
-        let ttStr = String(describing: ttSbtr)
-        
         print("--> \(title) tag = \(sender.tag) / in btnAlrtAction\n")
-        artActs.removeAll()
+        
+        // 여러줄 확인 / let > var 2ea : ttSbtr, title
+        //for _ in 0...2 {
+        //    ttSbtr.append(contentsOf: ttSbtr)
+        //    ttSbtr.append(contentsOf: ttSbtr)
+        //
+        //    title.append(title)
+        //    title.append(title)
+        //    title.append(title)
+        //}
+        
+        let ttStr   = String(describing: ttSbtr)
+        artTp       = ("\(ttStr)", "\(title)")
         
         switch style {
         case .basic:
-            artTp = ("\(ttStr)",
-            "\(title)")
-            
             for (i, _) in tblArr.enumerated() {
                 artActs.append(.init(title: "sys \(i)",
                                      style: .default,
