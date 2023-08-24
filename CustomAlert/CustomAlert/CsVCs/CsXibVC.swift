@@ -25,11 +25,13 @@ class CsXibVC: useDimBgVC {
     
     var lblTitleHeight: CGFloat = 20 {
         didSet {
-            let mxHeight: CGFloat       = (view.frame.height - 20) * 0.6
+            tblHeight.constant          = CGFloat(btnTitleArr.count * 50)
+            let tblIsHide: Bool         = tblHeight.constant == 0
+            
+            let mxHeight: CGFloat       = (view.frame.height - 20) * (tblIsHide ? 1.0 : 0.6)
             let height: CGFloat         = lblMsg.frame.maxY + 16
             
             contV_titMsgHeight.constant = height > mxHeight ? mxHeight : height
-            tblHeight.constant          = CGFloat(btnTitleArr.count * 50)
         }
     }
     

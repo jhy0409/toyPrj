@@ -48,8 +48,8 @@ class ViewController: UIViewController {
         //for _ in 0...2 {
         //    ttSbtr.append(contentsOf: ttSbtr)
         //    ttSbtr.append(contentsOf: ttSbtr)
+        //    ttSbtr.append(contentsOf: ttSbtr)
         //
-        //    title.append(title)
         //    title.append(title)
         //    title.append(title)
         //}
