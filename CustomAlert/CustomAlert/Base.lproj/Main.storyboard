@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CustomAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4xo-sd-Izl">
+                                <rect key="frame" x="16" y="79" width="361" height="719"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Inp-Xl-zov">
+                                        <rect key="frame" x="0.0" y="0.0" width="361" height="40"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UHB-eH-8G7">
+                                                <rect key="frame" x="0.0" y="0.0" width="321" height="40"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FK-e8-W4Y">
+                                                <rect key="frame" x="321" y="0.0" width="40" height="40"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="6FK-e8-W4Y" secondAttribute="height" multiplier="1:1" id="LA4-0g-4fW"/>
+                                                </constraints>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="info" catalog="system"/>
+                                                <buttonConfiguration key="configuration" style="tinted" image="info" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="15"/>
+                                                    <color key="baseForegroundColor" systemColor="labelColor"/>
+                                                    <color key="baseBackgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </buttonConfiguration>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isCircle" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="btnInfoAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IJm-55-WHy"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="bHD-xR-ZPD"/>
+                                        </constraints>
+                                    </stackView>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zhB-fA-egd">
+                                        <rect key="frame" x="0.0" y="50" width="361" height="519"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="fGs-qC-zem" customClass="tvcCell" customModule="CustomAlert" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="50" width="361" height="43.666667938232422"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fGs-qC-zem" id="mae-jz-1rg">
+                                                    <rect key="frame" x="0.0" y="0.0" width="361" height="43.666667938232422"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETa-Of-NxA">
+                                                            <rect key="frame" x="16" y="22" width="329" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="ETa-Of-NxA" firstAttribute="leading" secondItem="mae-jz-1rg" secondAttribute="leading" constant="16" id="68T-Gr-7aT"/>
+                                                        <constraint firstItem="ETa-Of-NxA" firstAttribute="centerY" secondItem="mae-jz-1rg" secondAttribute="centerY" id="MqX-0J-OdR"/>
+                                                        <constraint firstAttribute="trailing" secondItem="ETa-Of-NxA" secondAttribute="trailing" constant="16" id="OBN-8W-0Oc"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <inset key="separatorInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                                <connections>
+                                                    <outlet property="lbl" destination="ETa-Of-NxA" id="eVE-6V-qc5"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="4ar-yA-fFv"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="0Gc-sA-sN3"/>
+                                        </connections>
+                                    </tableView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="A5K-cY-9yw">
+                                        <rect key="frame" x="0.0" y="579" width="361" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJg-u9-IEt">
+                                                <rect key="frame" x="0.0" y="0.0" width="175.66666666666666" height="40"/>
+                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="알림1. 시스템 기본스타일"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="+">
+                                                    <backgroundConfiguration key="background">
+                                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                    </backgroundConfiguration>
+                                                    <color key="baseBackgroundColor" systemColor="systemGray6Color"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="chngeTblArrAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6ok-qF-xoB"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bay-Ss-nOa">
+                                                <rect key="frame" x="185.66666666666663" y="0.0" width="175.33333333333337" height="40"/>
+                                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="알림1. 시스템 기본스타일"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="-">
+                                                    <backgroundConfiguration key="background">
+                                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                    </backgroundConfiguration>
+                                                    <color key="baseBackgroundColor" systemColor="systemGray6Color"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="chngeTblArrAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8XB-YS-6On"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="Ndl-CA-plm"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CoB-4v-XPp">
+                                        <rect key="frame" x="0.0" y="629" width="361" height="40"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="알림1. 시스템 기본스타일"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="알림1. 시스템 기본스타일"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlJ-sA-U96">
+                                        <rect key="frame" x="0.0" y="679" width="361" height="40"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="알림2. 커스텀 스타일"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="알림2. 커스텀 스타일"/>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="nlJ-sA-U96" firstAttribute="height" secondItem="A5K-cY-9yw" secondAttribute="height" id="InV-Z5-EmR"/>
+                                    <constraint firstItem="CoB-4v-XPp" firstAttribute="height" secondItem="A5K-cY-9yw" secondAttribute="height" id="fJy-kb-Xjp"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="4xo-sd-Izl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="9D6-ZD-tSz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="4xo-sd-Izl" secondAttribute="bottom" constant="20" id="bcb-YQ-uqf"/>
+                            <constraint firstItem="4xo-sd-Izl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="jXp-zX-JA6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4xo-sd-Izl" secondAttribute="trailing" constant="16" id="tlL-HZ-adw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tblView" destination="zhB-fA-egd" id="BT6-nh-Cee"/>
+                        <outletCollection property="btnAlrtArr" destination="CoB-4v-XPp" collectionClass="NSMutableArray" id="DGV-cj-8qs"/>
+                        <outletCollection property="btnAlrtArr" destination="nlJ-sA-U96" collectionClass="NSMutableArray" id="8Vf-yT-CFV"/>
+                        <outletCollection property="btnPmArr" destination="bJg-u9-IEt" collectionClass="NSMutableArray" id="f5o-Js-BZB"/>
+                        <outletCollection property="btnPmArr" destination="bay-Ss-nOa" collectionClass="NSMutableArray" id="zC0-qa-kwG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-68" y="-27"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="info" catalog="system" width="93" height="128"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
