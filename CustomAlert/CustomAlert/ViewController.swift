@@ -43,6 +43,7 @@ class ViewController: UIViewController {
               let style = alrtStyle(rawValue: title) else { return }
         
         print("--> \(title) tag = \(sender.tag) / in btnAlrtAction\n")
+        artActs.removeAll()
         
         // 여러줄 확인 / let > var 2ea : ttSbtr, title
         //for _ in 0...2 {
