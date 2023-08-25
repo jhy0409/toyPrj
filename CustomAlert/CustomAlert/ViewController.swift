@@ -87,8 +87,14 @@ class ViewController: UIViewController {
             present(csXibVC, animated: true)
         
         case .csCode:
-            break
-        
+            let csCodeVC = CsCodeVC()
+            csCodeVC.modalPresentationStyle = .overFullScreen
+            csCodeVC.isDefPair = isDefPair
+            
+            csCodeVC.btnTitleArr = tblArr.map { "cst 2-2. \(String(describing: $0))" }
+            
+            present(csCodeVC, animated: true)
+            
         case .csSfUi:
             break
         }
