@@ -94,9 +94,15 @@ extension String {
     
 }
 
+class CommonTvc: UITableViewCell {
+    func setView(fcn: String = #function, lne: Int = #line, spot: String = #fileID) {
+        print("--> cvc spot = \(fcn)\t[ \(lne) ] / in \(spot.fileName)\n")
+    }
+}
+
 class CommonVC: UIViewController {
     func setView(fcn: String = #function, lne: Int = #line, spot: String = #fileID) {
-        print("--> spot = \(fcn)\t[ \(lne) ] / in \(spot.fileName)\n")
+        print("--> vc spot = \(fcn)\t[ \(lne) ] / in \(spot.fileName)\n")
     }
 }
 

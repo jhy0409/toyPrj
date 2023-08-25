@@ -11,10 +11,6 @@ class CsXibVC: useDimBgVC {
     
     // MARK: ------------------- IBOutlets -------------------
     
-    @IBOutlet weak var colV: UICollectionView!
-    @IBOutlet weak var cvHeight: NSLayoutConstraint!
-    var btnTitleArr: [String] = []
-    
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var lblMsg: UILabel!
     
@@ -25,13 +21,39 @@ class CsXibVC: useDimBgVC {
     @IBOutlet weak var contV_titMsgHeight: NSLayoutConstraint!
     @IBOutlet weak var contV_WidthRatio: NSLayoutConstraint!
     
+    @IBOutlet weak var tblView: UITableView!
+    @IBOutlet weak var tvHeight: NSLayoutConstraint!
+    
+    
+    // MARK: ------------------- Variables -------------------
+    var isDefPair: btnLayout = .withinZroIdx
+    var btnTitleArr: [String] = []
+    
+    var calcCnt: Int {
+        let cnt = btnTitleArr.count
+        switch isDefPair {
+
+        case .withinZroIdx:
+            switch btnTitleArr.count {
+            case 0: return 0
+            case 1...2: return 1
+            default: return cnt
+            }
+            
+        case .evenRng:
+            return (btnTitleArr.count / 2) + (cnt % 2 == 0 ? 0 : 1)
+            
+        case .fullSize:
+            return cnt
+        }
+    }
+    
     var defCellHgt: CGFloat = 50
-    lazy var tblHeightVal: CGFloat = CGFloat(btnTitleArr.count) * defCellHgt
+    lazy var tblHeightVal: CGFloat = CGFloat(calcCnt) * defCellHgt
     
     var titMsgViewFull: CGFloat = 1.0
     var titMsgViewMax: CGFloat = 0.6
     
-    // MARK: ------------------- Variables -------------------
     lazy var csXViewNums: CsViewNums = .init(csWidthRatio: 0.8,
                                              defMrgVerti: view.frame.height * 0.05,
                                              tblDefRatio: tblHeightVal == 0 ? titMsgViewFull : titMsgViewMax)
@@ -41,13 +63,15 @@ class CsXibVC: useDimBgVC {
     var lblTitleHeight: CGFloat = 20 {
         didSet {
             let defMrgVerti: CGFloat    = csXViewNums.defMrgVerti * 2
+            let viewHeight: CGFloat     = view.frame.height - defMrgVerti
             
-            cvHeight.constant          = tblHeightVal
-            
-            let mxHeight: CGFloat       = (view.frame.height - defMrgVerti) * csXViewNums.tblDefRatio
+            let mxHeight: CGFloat       =  viewHeight * csXViewNums.tblDefRatio
             let height: CGFloat         = lblMsg.frame.maxY + 16
             
             contV_titMsgHeight.constant = height > mxHeight ? mxHeight : height
+            
+            let remainHgt: CGFloat      = viewHeight - contV_titMsgHeight.constant
+            tvHeight.constant           = remainHgt - tblHeightVal < 0 ? remainHgt : tblHeightVal
         }
     }
     
@@ -88,7 +112,67 @@ class CsXibVC: useDimBgVC {
     
     
     // MARK: ------------------- function -------------------
+    /**
+     - total    : 0, 1, 2
+     - calc     : 0, 1
+     - row      : 0, 1
   
+     1. withinZroIdx
+         1. total > 2 ? ( 0 / 1 / 2 / 3 / 4 / ... ) : ( 0, 1 )
+     
+     2. evenRange
+         - 0 - 0, 1
+         - 1 - 2, 3
+         - 2 - 4, 5
+         - 3 - 6
+     
+     3. fullSize
+     */
+    func getBtnIdxs(row: Int, calc: Int, total: Int) -> (prv: Int?, nxt: Int?)? {
+        print("\n--> row = \(row) /  calc = \(calc) /  total = \(total)")
+        
+        var res: (prv: Int?, nxt: Int?) = (nil, nil)
+        
+        switch isDefPair {
+        case .withinZroIdx:
+            switch total {
+            case 0: break
+                
+            case 1: // 0
+                res = (prv: total - 1, nxt: nil)
+                
+            case 2: // 0, 1
+                res = (prv: total - 2, nxt: total - 1)
+                
+            default:
+                switch total {
+                case 0: break
+                case 1: res = (total - 1, nil)
+                case 2: res = (total - 2, total - 1)
+                default: res = (row, nil)
+                }
+            }
+       
+        case .evenRng:
+            switch total {
+            case 0: break
+            case 1:
+                res = (total - 1, nil)
+                
+            default:
+                let prvIx: Int  = 2 * row
+                let nxtIx: Int? = (prvIx + 1) > (total - 1) ? nil : (prvIx + 1)
+                res = (prvIx, nxtIx)
+            }
+            
+        case .fullSize: return nil
+        }
+        
+        print("\(res)")
+        
+        return res
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -101,34 +185,96 @@ class CsXibVC: useDimBgVC {
 
 }
 
-// MARK: ------------------- collectionView -------------------
-extension CsXibVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return btnTitleArr.count
+// MARK: ------------------- tableView -------------------
+extension CsXibVC: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+       return calcCnt
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width: CGFloat  = collectionView.frame.size.width / 2
-        let height: CGFloat = defCellHgt
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CsXibTvc", for: indexPath) as! CsXibTvc
+        cell.backgroundColor    = .getRainb(idx: indexPath.row)
+        cell.tag                = indexPath.row
+        cell.isLast             = cell.tag == (btnTitleArr.count - 1)
+        cell.isDefPair          = isDefPair
         
-        return .init(width: width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CsXibCvc", for: indexPath) as! CsXibCvc
-        cell.tag = indexPath.item
+        let idxArr = getBtnIdxs(row: indexPath.row, calc: calcCnt, total: btnTitleArr.count)
         
-        cell.backgroundColor = .getRainb(idx: indexPath.item)
+        cell.setView(btnIdxs: idxArr)
         
         return cell
     }
+}
+
+// MARK: ------------------- cell class -------------------
+class CsXibTvc: CommonTvc {
+    @IBOutlet var btnTitles: [UIButton]!
+    
+    var isDefPair: btnLayout = .fullSize
+    var isLast: Bool = false
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    override func setView(fcn: String = #function, lne: Int = #line, spot: String = #fileID) {
+        super.setView(fcn: fcn, lne: lne, spot: spot)
+    }
+    
+    func setView(btnIdxs: (prv: Int?, nxt: Int?)?) {
+        setView()
+        
+        var btnBgCol: UIColor   = .clear
+        let prevCol: UIColor    = .red.withAlphaComponent(0.3)
+        let nxtCol: UIColor     = .blue.withAlphaComponent(0.3)
+        
+        
+        for i in 0..<btnTitles.count {
+            // 초기화
+            btnTitles[i].setTitle("", for: .normal)
+            
+            // 버튼 정렬 분기
+            switch isDefPair {
+                
+            case .withinZroIdx, .evenRng:
+                if let idxs = btnIdxs {
+                    switch i {
+                    case 0:
+                        if let first = idxs.prv {
+                            btnTitles[i].tag = first
+                            btnTitles[i].backgroundColor = prevCol
+                            
+                            btnTitles[i].setTitle(String(describing: first), for: .normal)
+                        }
+                        
+                    case 1:
+                        if let second = idxs.nxt {
+                            btnTitles[i].tag = second
+                            btnTitles[i].backgroundColor = nxtCol
+                            
+                            btnTitles[i].setTitle(String(describing: second), for: .normal)
+                        }
+                        
+                        btnTitles[i].isHidden = idxs.nxt == nil
+                        
+                    default: break
+                    }
+                }
+                
+            case .fullSize:
+                btnTitles[i].setTitle(String(describing: tag), for: .normal)
+                btnTitles[i].backgroundColor = btnBgCol
+                btnTitles[i].isHidden = i > 0
+            }
+        }
+        
+        
+    }
     
 }
 
-class CsXibCvc: UICollectionViewCell {
-    @IBOutlet weak var lbl_title: UILabel!
-}
 
+// MARK: ------------------- struct & enum -------------------
 struct CsViewNums {
     /// superView 대비 뷰 너비 비율
     var csWidthRatio: CGFloat
@@ -139,3 +285,21 @@ struct CsViewNums {
     var tblDefRatio: CGFloat
 }
 
+enum btnLayout {
+    /**
+     index 0번째만 두 칸 사용
+     
+     1. 0, 1, 2
+     
+     2. index
+     - 0 : 0, 1
+     - 1 : 2 ...
+     */
+    case withinZroIdx
+    
+    /// 짝수는 두 칸, 남은 인덱스가 홀수일 경우 한 칸
+    case evenRng
+    
+    /// 셀 가득 채우기
+    case fullSize
+}
