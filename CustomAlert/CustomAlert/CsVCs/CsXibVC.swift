@@ -61,11 +61,11 @@ class CsXibVC: useDimBgVC {
     var artTp: (title: String, msg: String) = ("", "")
     
     var lblTitleHeight: CGFloat = 20 {
-        didSet {
+        willSet {
             let defMrgVerti: CGFloat    = csXViewNums.defMrgVerti * 2
             let viewHeight: CGFloat     = view.frame.height - defMrgVerti
             
-            let mxHeight: CGFloat       =  viewHeight * csXViewNums.tblDefRatio
+            let mxHeight: CGFloat       = viewHeight * csXViewNums.tblDefRatio
             let height: CGFloat         = lblMsg.frame.maxY + 16
             
             contV_titMsgHeight.constant = height > mxHeight ? mxHeight : height
@@ -118,15 +118,16 @@ class CsXibVC: useDimBgVC {
      - row      : 0, 1
   
      1. withinZroIdx
-         1. total > 2 ? ( 0 / 1 / 2 / 3 / 4 / ... ) : ( 0, 1 )
+        1. 2개까지는 0번째 [0, 1] 정렬
+        2. 2개 초과시 fullSize 사용
      
-     2. evenRange
+     2. evenRange : 버튼개수가 짝수일 때는 [n, n+1], 홀수인 줄에서는 [n]으로 표시
          - 0 - 0, 1
          - 1 - 2, 3
          - 2 - 4, 5
          - 3 - 6
      
-     3. fullSize
+     3. fullSize : 버튼영역 전체 채우기
      */
     func getBtnIdxs(row: Int, calc: Int, total: Int) -> (prv: Int?, nxt: Int?)? {
         print("\n--> row = \(row) /  calc = \(calc) /  total = \(total)")
@@ -210,7 +211,7 @@ extension CsXibVC: UITableViewDataSource, UITableViewDelegate {
 class CsXibTvc: CommonTvc {
     @IBOutlet var btnTitles: [UIButton]!
     
-    var isDefPair: btnLayout = .fullSize
+    var isDefPair: btnLayout = .withinZroIdx
     var isLast: Bool = false
     
     override class func awakeFromNib() {
@@ -285,7 +286,7 @@ struct CsViewNums {
     var tblDefRatio: CGFloat
 }
 
-enum btnLayout {
+enum btnLayout: String {
     /**
      index 0번째만 두 칸 사용
      
@@ -295,11 +296,11 @@ enum btnLayout {
      - 0 : 0, 1
      - 1 : 2 ...
      */
-    case withinZroIdx
+    case withinZroIdx = "iOS기본 스타일"
     
     /// 짝수는 두 칸, 남은 인덱스가 홀수일 경우 한 칸
-    case evenRng
+    case evenRng = "바둑판 배열"
     
     /// 셀 가득 채우기
-    case fullSize
+    case fullSize = "채우기"
 }

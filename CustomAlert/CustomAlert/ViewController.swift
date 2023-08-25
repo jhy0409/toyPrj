@@ -11,6 +11,7 @@ class ViewController: UIViewController {
 
     // MARK: ------------------- IBOutlets -------------------
     
+    @IBOutlet weak var btnPupMenu: UIButton!
     
     @IBOutlet var btnAlrtArr: [UIButton]!
     @IBOutlet var btnPmArr: [UIButton]!
@@ -21,8 +22,13 @@ class ViewController: UIViewController {
     
     
     // MARK: ------------------- Variables -------------------
-    var artTp: (title: String, msg: String) = ("", "")
+    var isDefPair: btnLayout = .withinZroIdx {
+        willSet {
+            print("--> isDefPair didSet = \(newValue) / in viewCont\n")
+        }
+    }
     
+    var artTp: (title: String, msg: String) = ("", "")
     var artActs: [UIAlertAction] = []
     
     // MARK: ------------------- View Life Cycle -------------------
@@ -72,6 +78,7 @@ class ViewController: UIViewController {
             let csXibVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CsXibVC") as! CsXibVC
             csXibVC.modalPresentationStyle = .overFullScreen
             csXibVC.artTp = artTp
+            csXibVC.isDefPair = isDefPair
 
             for (i, _) in tblArr.enumerated() {
                 csXibVC.btnTitleArr.append("cst 2-1. \(i)")
@@ -88,9 +95,17 @@ class ViewController: UIViewController {
     }
     
     func showAlertVC(useDef: Bool = false) {
-        guard artActs.count > 0 || useDef else { return }
-        
         let artVC: UIAlertController = .init(title: artTp.title, message: artTp.msg, preferredStyle: .alert)
+        
+        guard artActs.count > 0 || useDef else {
+            artVC.title     = ""
+            artVC.message   = "+ 버튼을 눌러 요소를 추가하세요"
+            
+            artVC.addAction(.init(title: "확인", style: .default))
+            present(artVC, animated: true)
+            
+            return
+        }
         
         if useDef {
             artVC.addAction(.init(title: "확인", style: .default))
@@ -130,6 +145,16 @@ class ViewController: UIViewController {
             btn.tag = i
             btn.addTarget(self, action: #selector(btnAlrtAction), for: .touchUpInside)
         }
+        
+        let btnLayouts: [UIAction] = [btnLayout.withinZroIdx, btnLayout.evenRng, btnLayout.fullSize].map { val in
+            let act: UIAction = .init(title: val.rawValue, image: nil) { [weak self] _ in
+                guard let `self` = self else { return }
+                self.isDefPair = val
+            }
+            return act
+        }
+        
+        btnPupMenu.menu = UIMenu(children: btnLayouts)
     }
     
     
@@ -142,6 +167,8 @@ class ViewController: UIViewController {
 2. 알림창 스타일
 \(alrtStyle.basic.rawValue)
 \(alrtStyle.csXib.rawValue)
+\(alrtStyle.csCode.rawValue)
+\(alrtStyle.csSfUi.rawValue)
 """
         showAlertVC(useDef: true)
     }
