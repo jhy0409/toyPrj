@@ -77,6 +77,10 @@ class CsXibVC: useDimBgVC {
     
     
     // MARK: ------------------- View Life Cycle -------------------
+    deinit {
+        print("--> csXibVc 메모리 해제")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -109,7 +113,10 @@ class CsXibVC: useDimBgVC {
     
     
     // MARK: ------------------- IBAction functions -------------------
-    
+    @objc func cellTabAct(_ sender: UIButton) {
+        print("--> cellTabAct tag = \(sender.tag) / csXibVC\n")
+        dismiss(animated: true)
+    }
     
     // MARK: ------------------- function -------------------
     /**
@@ -173,17 +180,6 @@ class CsXibVC: useDimBgVC {
         
         return res
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 // MARK: ------------------- tableView -------------------
@@ -199,6 +195,8 @@ extension CsXibVC: UITableViewDataSource, UITableViewDelegate {
         cell.isLast             = cell.tag == (btnTitleArr.count - 1)
         cell.isDefPair          = isDefPair
         
+        cell.csXibVC            = self
+        
         let idxArr = getBtnIdxs(row: indexPath.row, calc: calcCnt, total: btnTitleArr.count)
         
         cell.setView(btnIdxs: idxArr)
@@ -213,6 +211,8 @@ class CsXibTvc: CommonTvc {
     
     var isDefPair: btnLayout = .withinZroIdx
     var isLast: Bool = false
+    
+    weak var csXibVC: CsXibVC?
     
     override class func awakeFromNib() {
         super.awakeFromNib()
@@ -267,6 +267,8 @@ class CsXibTvc: CommonTvc {
                 btnTitles[i].backgroundColor = btnBgCol
                 btnTitles[i].isHidden = i > 0
             }
+            
+            btnTitles[i].addTarget(csXibVC, action: #selector(csXibVC?.cellTabAct(_:)), for: .touchUpInside)
         }
         
         

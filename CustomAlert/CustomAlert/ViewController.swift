@@ -159,6 +159,7 @@ class ViewController: UIViewController {
     
     
     @IBAction func btnInfoAct(_ sender: UIButton) {
+        artTp.title.removeAll()
         artTp.msg = """
 1. 버튼 설명
 + : 알림창 버튼 개수 추가
@@ -196,7 +197,7 @@ class tvcCell: UITableViewCell {
 
 enum alrtStyle: String {
     case basic  = "알림1. 시스템 기본스타일"
-    case csXib = "알림2-1. 커스텀 스타일 / xib"
+    case csXib  = "알림2-1. 커스텀 스타일 / xib"
     case csCode = "알림2-2. 커스텀 스타일 / code"
     case csSfUi = "알림2-3. 커스텀 스타일 / SwiftUI"
     
