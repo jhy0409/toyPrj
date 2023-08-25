@@ -80,7 +80,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zhB-fA-egd">
-                                        <rect key="frame" x="0.0" y="49.999999999999972" width="361" height="415.33333333333326"/>
+                                        <rect key="frame" x="0.0" y="50" width="361" height="394"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="fGs-qC-zem" customClass="tvcCell" customModule="CustomAlert" customModuleProvider="target">
@@ -115,7 +115,7 @@
                                         </connections>
                                     </tableView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="A5K-cY-9yw">
-                                        <rect key="frame" x="0.0" y="475.33333333333337" width="361" height="45"/>
+                                        <rect key="frame" x="0.0" y="454" width="361" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJg-u9-IEt">
                                                 <rect key="frame" x="0.0" y="0.0" width="175.66666666666666" height="45"/>
@@ -153,32 +153,34 @@
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CoB-4v-XPp">
-                                        <rect key="frame" x="0.0" y="530.33333333333337" width="361" height="45"/>
+                                        <rect key="frame" x="0.0" y="509" width="361" height="45"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="알림1. 시스템 기본스타일"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="알림1. 시스템 기본스타일"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="."/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nlJ-sA-U96">
-                                        <rect key="frame" x="0.0" y="585.33333333333337" width="361" height="45"/>
+                                        <rect key="frame" x="0.0" y="564" width="361" height="45"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="알림2. 커스텀 스타일"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="알림2-1. 커스텀 스타일 / xib"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="."/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vhn-MN-1ub">
-                                        <rect key="frame" x="0.0" y="640.33333333333337" width="361" height="34.333333333333371"/>
+                                        <rect key="frame" x="0.0" y="619" width="361" height="45"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="알림2. 커스텀 스타일"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="알림2-2. 커스텀 스타일 / code"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="."/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RHo-Xt-RSE">
-                                        <rect key="frame" x="0.0" y="684.66666666666663" width="361" height="34.333333333333371"/>
+                                        <rect key="frame" x="0.0" y="674" width="361" height="45"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="알림2. 커스텀 스타일"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="알림2-3. 커스텀 스타일 / SwiftUI"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="."/>
                                     </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="RHo-Xt-RSE" firstAttribute="height" secondItem="A5K-cY-9yw" secondAttribute="height" id="HQh-ED-Jsa"/>
                                     <constraint firstItem="nlJ-sA-U96" firstAttribute="height" secondItem="A5K-cY-9yw" secondAttribute="height" id="InV-Z5-EmR"/>
+                                    <constraint firstItem="Vhn-MN-1ub" firstAttribute="height" secondItem="A5K-cY-9yw" secondAttribute="height" id="eRA-vp-IAj"/>
                                     <constraint firstItem="CoB-4v-XPp" firstAttribute="height" secondItem="A5K-cY-9yw" secondAttribute="height" id="fJy-kb-Xjp"/>
                                 </constraints>
                             </stackView>

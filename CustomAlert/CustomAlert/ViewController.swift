@@ -141,9 +141,12 @@ class ViewController: UIViewController {
     
     // MARK: ------------------- function -------------------
     func setView() {
+        let btnTitles: [String] = [alrtStyle.basic, alrtStyle.csXib, alrtStyle.csCode, alrtStyle.csSfUi].map { $0.rawValue }
+        
         for (i, btn) in btnAlrtArr.enumerated() {
             btn.tag = i
             btn.addTarget(self, action: #selector(btnAlrtAction), for: .touchUpInside)
+            btn.setTitle(btnTitles[i], for: .normal)
         }
         
         let btnLayouts: [UIAction] = [btnLayout.withinZroIdx, btnLayout.evenRng, btnLayout.fullSize].map { val in
