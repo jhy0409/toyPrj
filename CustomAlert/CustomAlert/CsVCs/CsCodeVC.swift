@@ -32,6 +32,8 @@ class CsCodeVC: useDimBgVC {
     var defCellHgt: CGFloat = 50
     
     
+    var artTp: (title: String, msg: String) = ("", "")
+    
     // MARK: ------------------- Variables -------------------
     var isDefPair: btnLayout = .withinZroIdx
     var btnTitleArr: [String] = []
@@ -72,6 +74,19 @@ class CsCodeVC: useDimBgVC {
         containerView.spacing       = 0
         containerView.cornerRadi    = 15
         
+        lblTitle.text   = artTp.title
+        lblMsg.text     = artTp.msg
+        
+        for (i, lbl) in [lblTitle, lblMsg].enumerated() {
+            lbl.textAlignment = .center
+            lbl.numberOfLines = 0
+            
+            lbl.setContentHuggingPriority( i < 1 ? .defaultHigh : .defaultLow, for: .vertical)
+        }
+        
+        let scrCL = scrWithTitleMsg.contentLayoutGuide
+        let scrFL = scrWithTitleMsg.frameLayoutGuide
+        
         NSLayoutConstraint.activate([
             containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             containerView.widthAnchor.constraint(equalToConstant: view.frame.width * contV_WidthRatio),
@@ -81,12 +96,27 @@ class CsCodeVC: useDimBgVC {
             
             contTitMstView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             contTitMstView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            contTitMstView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            contTitMstView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
             contTitMstView.heightAnchor.constraint(equalToConstant: contV_titMsgHeight),
+            
+            scrWithTitleMsg.leadingAnchor.constraint(equalTo: contTitMstView.leadingAnchor, constant: 16),
+            scrWithTitleMsg.trailingAnchor.constraint(equalTo: contTitMstView.trailingAnchor, constant: -16),
+            scrWithTitleMsg.topAnchor.constraint(equalTo: contTitMstView.topAnchor),
+            scrWithTitleMsg.bottomAnchor.constraint(equalTo: contTitMstView.bottomAnchor),
+            
+            lblTitle.leadingAnchor.constraint(equalTo: scrWithTitleMsg.leadingAnchor),
+            lblTitle.trailingAnchor.constraint(equalTo: scrWithTitleMsg.trailingAnchor),
+            lblTitle.widthAnchor.constraint(equalTo: scrFL.widthAnchor, multiplier: 1.0),
+            lblTitle.topAnchor.constraint(equalTo: scrWithTitleMsg.topAnchor),
+            
+            lblMsg.leadingAnchor.constraint(equalTo: scrWithTitleMsg.leadingAnchor),
+            lblMsg.trailingAnchor.constraint(equalTo: scrWithTitleMsg.trailingAnchor),
+            lblMsg.topAnchor.constraint(equalTo: lblTitle.bottomAnchor, constant: 16),
+            lblMsg.bottomAnchor.constraint(equalTo: scrCL.bottomAnchor, constant: -16),
             
             tblView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             tblView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            tblView.topAnchor.constraint(equalTo: contTitMstView.bottomAnchor),
+            tblView.topAnchor.constraint(equalTo: contTitMstView.bottomAnchor, constant: 16),
             tblView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             tblView.heightAnchor.constraint(equalToConstant: tvHeight)
         ])

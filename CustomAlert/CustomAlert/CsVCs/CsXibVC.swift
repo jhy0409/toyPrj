@@ -66,7 +66,7 @@ class CsXibVC: useDimBgVC {
             let viewHeight: CGFloat     = view.frame.height - defMrgVerti
             
             let mxHeight: CGFloat       = viewHeight * csXViewNums.tblDefRatio
-            let height: CGFloat         = lblMsg.frame.maxY + 32
+            let height: CGFloat         = lblMsg.frame.maxY
             
             contV_titMsgHeight.constant = height > mxHeight ? mxHeight : height
             
