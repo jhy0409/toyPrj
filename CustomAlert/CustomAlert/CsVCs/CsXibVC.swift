@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CsXibVC: useDimBgVC {
+class CsXibVC: useDimBgVC, PrBtnLayout {
     
     // MARK: ------------------- IBOutlets -------------------
     
@@ -28,28 +28,6 @@ class CsXibVC: useDimBgVC {
     // MARK: ------------------- Variables -------------------
     var isDefPair: btnLayout = .withinZroIdx
     var btnTitleArr: [String] = []
-    
-    var calcCnt: Int {
-        let cnt = btnTitleArr.count
-        switch isDefPair {
-
-        case .withinZroIdx:
-            switch btnTitleArr.count {
-            case 0: return 0
-            case 1...2: return 1
-            default: return cnt
-            }
-            
-        case .evenRng:
-            return (btnTitleArr.count / 2) + (cnt % 2 == 0 ? 0 : 1)
-            
-        case .fullSize:
-            return cnt
-        }
-    }
-    
-    var defCellHgt: CGFloat = 50
-    lazy var tblHeightVal: CGFloat = CGFloat(calcCnt) * defCellHgt
     
     var titMsgViewFull: CGFloat = 1.0
     var titMsgViewMax: CGFloat = 0.6
@@ -188,6 +166,10 @@ extension CsXibVC: UITableViewDataSource, UITableViewDelegate {
        return calcCnt
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return defCellHgt
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CsXibTvc", for: indexPath) as! CsXibTvc
         cell.backgroundColor    = .getRainb(idx: indexPath.row)
@@ -306,3 +288,76 @@ enum btnLayout: String {
     /// 셀 가득 채우기
     case fullSize = "채우기"
 }
+
+
+protocol PrBtnLayout {
+    var isDefPair: btnLayout { get set }
+    var btnTitleArr: [String] { get set }
+    
+    var calcCnt: Int { get }
+    
+    var artTp: (title: String, msg: String) { get set }
+    
+    var defViewWidthRatio: CGFloat { get set }
+    var defCellHgt: CGFloat { get set }
+    var tblHeightVal: CGFloat { get }
+    
+    var titMsgViewFull: CGFloat { get set }
+    var titMsgViewMax: CGFloat { get set }
+    
+    
+    var defMrgVerti: CGFloat { get set }
+    var csXViewNums: CsViewNums { get }
+}
+
+extension PrBtnLayout {
+    
+    var calcCnt: Int {
+        let cnt = btnTitleArr.count
+        switch isDefPair {
+
+        case .withinZroIdx:
+            switch btnTitleArr.count {
+            case 0: return 0
+            case 1...2: return 1
+            default: return cnt
+            }
+            
+        case .evenRng:
+            return (btnTitleArr.count / 2) + (cnt % 2 == 0 ? 0 : 1)
+            
+        case .fullSize:
+            return cnt
+        }
+    }
+    
+    var defViewWidthRatio: CGFloat {
+        get { return 0.8 }
+        set { defViewWidthRatio = newValue }
+    }
+    
+    var defCellHgt: CGFloat {
+        get { return 50 }
+        set { defCellHgt = newValue }
+    }
+    
+    var tblHeightVal: CGFloat {
+        return CGFloat(calcCnt) * defCellHgt
+    }
+    
+    var defMrgVerti: CGFloat {
+        get { return 0.05 }
+        set { defMrgVerti = newValue }
+    }
+    
+    var csXViewNums: CsViewNums {
+        get {
+            return .init(csWidthRatio: defViewWidthRatio,
+                         defMrgVerti: defMrgVerti,
+                         tblDefRatio: tblHeightVal == 0 ? titMsgViewFull : titMsgViewMax)
+        }
+    }
+    
+    
+}
+
