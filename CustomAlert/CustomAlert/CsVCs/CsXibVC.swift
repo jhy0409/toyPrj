@@ -346,7 +346,7 @@ extension PrBtnLayout {
     }
     
     var defMrgVerti: CGFloat {
-        get { return 0.05 }
+        get { return 0.1 }
         set { defMrgVerti = newValue }
     }
     

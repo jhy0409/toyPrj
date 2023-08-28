@@ -17,7 +17,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
     
     var containerView: UIStackView = .init()
     var contV_WidthRatio: CGFloat = 0.85
-    var ctTopBtm: CGFloat = 10
+    var ctTopBtm: Constraint?
     
     var contTitMstView: UIView = .init()
     var contTitMstViewHeight: Constraint?
@@ -39,21 +39,36 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
     
     var artTp: (title: String, msg: String) = ("", "")
     
+    var isTblHide: Bool {
+        return tblHeightVal <= 0
+    }
+    
+    /// 상하 마진
+    var defMrgVti: CGFloat {
+        return (csXViewNums.defMrgVerti * 2) * view.frame.height
+    }
+    
+    var viewHeight: CGFloat {
+        return view.frame.height - defMrgVti
+    }
+    
+    var mxHeight: CGFloat {
+        return viewHeight * csXViewNums.tblDefRatio
+    }
+    
+    var mnHeight: CGFloat {
+        return viewHeight * (1.0 - csXViewNums.tblDefRatio)
+    }
+    
     var lblTitleHeight: CGFloat = 20 {
         willSet {
-            let defMrgVerti: CGFloat    = csXViewNums.defMrgVerti * 2
-            //let viewHeight: CGFloat     = view.frame.height - (defMrgVerti * view.frame.height)
-            let viewHeight: CGFloat     = containerView.frame.height
-            
-            let mxHeight: CGFloat       = viewHeight * csXViewNums.tblDefRatio
             let height: CGFloat         = lblMsg.frame.maxY
             let resHeight: CGFloat      = height > mxHeight ? mxHeight : height
-            //contV_titMsgHeight.constant = height > mxHeight ? mxHeight : height
-            contTitMstViewHeight?.update(offset: resHeight)
+            contTitMstViewHeight?.update(inset: resHeight)
             
             let remainHgt: CGFloat      = viewHeight - resHeight
-            //tvHeight.constant           = remainHgt - tblHeightVal < 0 ? remainHgt : tblHeightVal
             tvHeight?.update(offset: remainHgt - tblHeightVal < 0 ? remainHgt : tblHeightVal)
+            
             view.layoutIfNeeded()
             
         }
@@ -77,13 +92,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
     
     
     override func viewDidAppear(_ animated: Bool) {
-    //    super.viewDidAppear(animated)
-    //    contTitMstView.snp.updateConstraints { make in
-    //        make.height.equalTo(lblMsg.frame.maxY)
-    //    }
-    //    super.updateViewConstraints()
-        
-        
+        super.viewDidAppear(animated)
         lblTitleHeight = lblMsg.frame.maxY
         
     }
@@ -128,63 +137,18 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         let scrCL = scrWithTitleMsg.contentLayoutGuide
         let scrFL = scrWithTitleMsg.frameLayoutGuide
         
-        //NSLayoutConstraint.activate([
-        //    containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        //    containerView.widthAnchor.constraint(equalToConstant: view.frame.width * contV_WidthRatio),
-        //    containerView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-        //    containerView.topAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.topAnchor, constant: ctTopBtm),
-        //    containerView.bottomAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: ctTopBtm),
-        //
-        //    contTitMstView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-        //    contTitMstView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-        //    contTitMstView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
-        //    contTitMstView.heightAnchor.constraint(equalToConstant: contV_titMsgHeight),
-        //
-        //    scrWithTitleMsg.leadingAnchor.constraint(equalTo: contTitMstView.leadingAnchor, constant: 16),
-        //    scrWithTitleMsg.trailingAnchor.constraint(equalTo: contTitMstView.trailingAnchor, constant: -16),
-        //    scrWithTitleMsg.topAnchor.constraint(equalTo: contTitMstView.topAnchor),
-        //    scrWithTitleMsg.bottomAnchor.constraint(equalTo: contTitMstView.bottomAnchor),
-        //
-        //    lblTitle.leadingAnchor.constraint(equalTo: scrWithTitleMsg.leadingAnchor),
-        //    lblTitle.trailingAnchor.constraint(equalTo: scrWithTitleMsg.trailingAnchor),
-        //    lblTitle.widthAnchor.constraint(equalTo: scrFL.widthAnchor, multiplier: 1.0),
-        //    lblTitle.topAnchor.constraint(equalTo: scrWithTitleMsg.topAnchor),
-        //
-        //    lblMsg.leadingAnchor.constraint(equalTo: scrWithTitleMsg.leadingAnchor),
-        //    lblMsg.trailingAnchor.constraint(equalTo: scrWithTitleMsg.trailingAnchor),
-        //    lblMsg.topAnchor.constraint(equalTo: lblTitle.bottomAnchor, constant: 16),
-        //    lblMsg.bottomAnchor.constraint(equalTo: scrCL.bottomAnchor, constant: -16),
-        //
-        //    tblView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-        //    tblView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-        //    tblView.topAnchor.constraint(equalTo: contTitMstView.bottomAnchor, constant: 16),
-        //    tblView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-        //    tblView.heightAnchor.constraint(equalToConstant: tvHeight)
-        //])
-        
-        
-        
-        
-        let defMrgVerti: CGFloat    = csXViewNums.defMrgVerti * 2 * view.frame.height
-        //let viewHeight: CGFloat     = view.frame.height - defMrgVerti
-        let viewHeight: CGFloat     = view.frame.height - defMrgVerti
-        let mxHeight: CGFloat       = viewHeight * csXViewNums.tblDefRatio
-        
-        let defHeight: CGFloat      = mxHeight
-        let isTblHide: Bool         = tblHeightVal <= 0
-        
         containerView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalTo(view.frame.width * contV_WidthRatio)
-            make.centerY.equalTo(view.snp_centerYWithinMargins)
-            make.top.bottom.greaterThanOrEqualTo(view).inset(defMrgVerti)
+            make.centerY.equalTo(view.snp.centerY)
+            make.top.bottom.greaterThanOrEqualTo(view).inset(defMrgVti / 2)
         }
         
         contTitMstView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(containerView)
             make.top.equalTo(containerView).inset(16)
             
-            self.contTitMstViewHeight = make.height.equalTo(isTblHide ? viewHeight : viewHeight * 0.6).priority(.high).constraint
+            self.contTitMstViewHeight = make.height.equalTo(isTblHide ? viewHeight : mxHeight).priority(.high).constraint
         }
         
         scrWithTitleMsg.snp.makeConstraints { make in
@@ -200,16 +164,16 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         lblMsg.snp.makeConstraints { make in
             make.leading.trailing.equalTo(lblTitle)
             make.top.equalTo(lblTitle.snp.bottom).offset(16)
-            make.bottom.equalTo(scrWithTitleMsg).offset(isTblHide ? 0 : -16)
+            make.bottom.equalTo(scrWithTitleMsg).offset(0)
         }
         
         tblView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(containerView)
-            make.top.equalTo(contTitMstView.snp.bottom).offset(0)
-            make.bottom.equalTo(containerView.snp.bottom).inset(16)
+            make.top.equalTo(contTitMstView.snp.bottom).offset(isTblHide ? 0 : 16)
+            make.bottom.equalTo(containerView.snp.bottom).inset(isTblHide ? 16 : 0)
             
-            self.tvHeight = make.height.equalTo(tblHeightVal).priority(.low).constraint
-            make.height.lessThanOrEqualTo(defHeight * 0.4)
+            self.tvHeight = make.height.equalTo(tblHeightVal).priority(.required).constraint
+            make.height.lessThanOrEqualTo(mnHeight).priority(.required)
         }
         
     }
