@@ -180,7 +180,10 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
     
     
     // MARK: ------------------- IBAction functions -------------------
-    
+    @objc func cellTabAct(_ sender: UIButton) {
+        print("--> cellTabAct tag = \(sender.tag) / CsCodeVC\n")
+        dismiss(animated: true)
+    }
     
     // MARK: ------------------- function -------------------
 
@@ -189,7 +192,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
 // MARK: ------------------- tableView -------------------
 extension CsCodeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return btnTitleArr.count
+        return calcCnt
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -198,13 +201,132 @@ extension CsCodeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CsCodeTVC") as! CsCodeTVC
-        cell.backgroundColor = .getRainb(idx: indexPath.row + 2)
+        cell.tag = indexPath.row + 2
+        cell.isDefPair = isDefPair
+        cell.csCodeVC = self
+        
+        cell.backgroundColor = .getRainb(idx: indexPath.row)
+        
+        let idxArr = getBtnIdxs(row: indexPath.row, calc: calcCnt, total: btnTitleArr.count)
+        cell.setView(btnIdxs: idxArr)
         
         return cell
     }
 }
 
 
-class CsCodeTVC: UITableViewCell {
+class CsCodeTVC: CommonTvc {
+    weak var csCodeVC: CsCodeVC?
     
+    var stvHrz: UIStackView = {
+        let view = UIStackView()
+        view.distribution   = .fillEqually
+        view.alignment      = .center
+        view.spacing        = 0
+        view.axis           = .horizontal
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
+    var btn0: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.titleLabel?.numberOfLines = 0
+        
+        return view
+    }()
+    
+    var btn1: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.titleLabel?.numberOfLines = 0
+        
+        return view
+    }()
+    
+    var isDefPair: btnLayout = .withinZroIdx
+    
+    var btnTitles: [UIButton] = []
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        csCodeVC = nil
+    }
+    
+    func setView(btnIdxs: (prv: Int?, nxt: Int?)?) {
+        setView()
+        
+        btnTitles = [btn0, btn1]
+        for (i, btn) in btnTitles.enumerated() {
+            btn.tag = i
+        }
+        
+        contentView.addSubview(stvHrz)
+        stvHrz.addSubview(btn0)
+        stvHrz.addSubview(btn1)
+        
+        stvHrz.snp.makeConstraints { make in
+            make.top.bottom.equalTo(contentView)
+            make.leading.equalTo(contentView.snp.leading).offset(16)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-16)
+        }
+        
+        btn0.snp.makeConstraints { make in
+            make.leading.top.bottom.equalTo(stvHrz)
+            make.width.equalTo(stvHrz.snp.width).multipliedBy( btnIdxs?.nxt != nil ? 0.5 : 1.0 )
+        }
+        
+        btn1.snp.makeConstraints { make in
+            make.top.bottom.equalTo(stvHrz)
+            make.leading.equalTo(btn0.snp.trailing)
+            make.trailing.equalTo(stvHrz.snp.trailing)
+        }
+        
+        let btnBgCol: UIColor   = .clear
+        let prevCol: UIColor    = .red.withAlphaComponent(0.3)
+        let nxtCol: UIColor     = .blue.withAlphaComponent(0.3)
+        
+        for i in 0..<btnTitles.count {
+            // 초기화
+            btnTitles[i].setTitle("", for: .normal)
+            
+            // 버튼 정렬 분기
+            switch isDefPair {
+                
+            case .withinZroIdx, .evenRng:
+                if let idxs = btnIdxs {
+                    switch i {
+                    case 0:
+                        if let first = idxs.prv {
+                            btnTitles[i].tag = first
+                            btnTitles[i].backgroundColor = prevCol
+                            
+                            btnTitles[i].setTitle(String(describing: first), for: .normal)
+                        }
+                        
+                    case 1:
+                        if let second = idxs.nxt {
+                            btnTitles[i].tag = second
+                            btnTitles[i].backgroundColor = nxtCol
+                            
+                            btnTitles[i].setTitle(String(describing: second), for: .normal)
+                        }
+                        
+                        btnTitles[i].isHidden = idxs.nxt == nil
+                        
+                    default: break
+                    }
+                }
+                
+            case .fullSize:
+                btnTitles[i].setTitle(String(describing: tag), for: .normal)
+                btnTitles[i].backgroundColor = btnBgCol
+                btnTitles[i].isHidden = i > 0
+            }
+            
+            btnTitles[i].addTarget(csCodeVC, action: #selector(csCodeVC?.cellTabAct(_:)), for: .touchUpInside)
+        }
+    }
 }

@@ -97,67 +97,6 @@ class CsXibVC: useDimBgVC, PrBtnLayout {
     }
     
     // MARK: ------------------- function -------------------
-    /**
-     - total    : 0, 1, 2
-     - calc     : 0, 1
-     - row      : 0, 1
-  
-     1. withinZroIdx
-        1. 2개까지는 0번째 [0, 1] 정렬
-        2. 2개 초과시 fullSize 사용
-     
-     2. evenRange : 버튼개수가 짝수일 때는 [n, n+1], 홀수인 줄에서는 [n]으로 표시
-         - 0 - 0, 1
-         - 1 - 2, 3
-         - 2 - 4, 5
-         - 3 - 6
-     
-     3. fullSize : 버튼영역 전체 채우기
-     */
-    func getBtnIdxs(row: Int, calc: Int, total: Int) -> (prv: Int?, nxt: Int?)? {
-        print("\n--> row = \(row) /  calc = \(calc) /  total = \(total)")
-        
-        var res: (prv: Int?, nxt: Int?) = (nil, nil)
-        
-        switch isDefPair {
-        case .withinZroIdx:
-            switch total {
-            case 0: break
-                
-            case 1: // 0
-                res = (prv: total - 1, nxt: nil)
-                
-            case 2: // 0, 1
-                res = (prv: total - 2, nxt: total - 1)
-                
-            default:
-                switch total {
-                case 0: break
-                case 1: res = (total - 1, nil)
-                case 2: res = (total - 2, total - 1)
-                default: res = (row, nil)
-                }
-            }
-       
-        case .evenRng:
-            switch total {
-            case 0: break
-            case 1:
-                res = (total - 1, nil)
-                
-            default:
-                let prvIx: Int  = 2 * row
-                let nxtIx: Int? = (prvIx + 1) > (total - 1) ? nil : (prvIx + 1)
-                res = (prvIx, nxtIx)
-            }
-            
-        case .fullSize: return nil
-        }
-        
-        print("\(res)")
-        
-        return res
-    }
 }
 
 // MARK: ------------------- tableView -------------------
@@ -308,6 +247,8 @@ protocol PrBtnLayout {
     
     var defMrgVerti: CGFloat { get set }
     var csXViewNums: CsViewNums { get }
+    
+    func getBtnIdxs(row: Int, calc: Int, total: Int) -> (prv: Int?, nxt: Int?)?
 }
 
 extension PrBtnLayout {
@@ -358,6 +299,66 @@ extension PrBtnLayout {
         }
     }
     
-    
+    /**
+     - total    : 0, 1, 2
+     - calc     : 0, 1
+     - row      : 0, 1
+  
+     1. withinZroIdx
+        1. 2개까지는 0번째 [0, 1] 정렬
+        2. 2개 초과시 fullSize 사용
+     
+     2. evenRange : 버튼개수가 짝수일 때는 [n, n+1], 홀수인 줄에서는 [n]으로 표시
+         - 0 - 0, 1
+         - 1 - 2, 3
+         - 2 - 4, 5
+         - 3 - 6
+     
+     3. fullSize : 버튼영역 전체 채우기
+     */
+    func getBtnIdxs(row: Int, calc: Int, total: Int) -> (prv: Int?, nxt: Int?)? {
+        print("\n--> row = \(row) /  calc = \(calc) /  total = \(total)")
+        
+        var res: (prv: Int?, nxt: Int?) = (nil, nil)
+        
+        switch isDefPair {
+        case .withinZroIdx:
+            switch total {
+            case 0: break
+                
+            case 1: // 0
+                res = (prv: total - 1, nxt: nil)
+                
+            case 2: // 0, 1
+                res = (prv: total - 2, nxt: total - 1)
+                
+            default:
+                switch total {
+                case 0: break
+                case 1: res = (total - 1, nil)
+                case 2: res = (total - 2, total - 1)
+                default: res = (row, nil)
+                }
+            }
+       
+        case .evenRng:
+            switch total {
+            case 0: break
+            case 1:
+                res = (total - 1, nil)
+                
+            default:
+                let prvIx: Int  = 2 * row
+                let nxtIx: Int? = (prvIx + 1) > (total - 1) ? nil : (prvIx + 1)
+                res = (prvIx, nxtIx)
+            }
+            
+        case .fullSize: return nil
+        }
+        
+        print("\(res)")
+        
+        return res
+    }
 }
 
