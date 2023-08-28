@@ -225,7 +225,7 @@ class CsXibTvc: CommonTvc {
     func setView(btnIdxs: (prv: Int?, nxt: Int?)?) {
         setView()
         
-        var btnBgCol: UIColor   = .clear
+        let btnBgCol: UIColor   = .clear
         let prevCol: UIColor    = .red.withAlphaComponent(0.3)
         let nxtCol: UIColor     = .blue.withAlphaComponent(0.3)
         

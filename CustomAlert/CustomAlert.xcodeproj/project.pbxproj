@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,9 +17,11 @@
 		68DFFE2A2A975207000B2198 /* CsCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DFFE292A975207000B2198 /* CsCodeVC.swift */; };
 		68DFFE2C2A97520A000B2198 /* CsSfUiVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DFFE2B2A97520A000B2198 /* CsSfUiVC.swift */; };
 		68DFFE2E2A97539A000B2198 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DFFE2D2A97539A000B2198 /* Extension.swift */; };
+		76758A471F7AD4B75CB48B0B /* Pods_CustomAlert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9804D2A34B50B3E90F62BB47 /* Pods_CustomAlert.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5ECC0507A24F7CF4E630381D /* Pods-CustomAlert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomAlert.release.xcconfig"; path = "Target Support Files/Pods-CustomAlert/Pods-CustomAlert.release.xcconfig"; sourceTree = "<group>"; };
 		68C22D842A93F52B001FFFD5 /* CustomAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68C22D872A93F52B001FFFD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68C22D892A93F52B001FFFD5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +34,8 @@
 		68DFFE292A975207000B2198 /* CsCodeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CsCodeVC.swift; sourceTree = "<group>"; };
 		68DFFE2B2A97520A000B2198 /* CsSfUiVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CsSfUiVC.swift; sourceTree = "<group>"; };
 		68DFFE2D2A97539A000B2198 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		9804D2A34B50B3E90F62BB47 /* Pods_CustomAlert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CustomAlert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB6C3FA27426B45777916684 /* Pods-CustomAlert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CustomAlert.debug.xcconfig"; path = "Target Support Files/Pods-CustomAlert/Pods-CustomAlert.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,17 +43,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76758A471F7AD4B75CB48B0B /* Pods_CustomAlert.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0CEE28E77C3D2BD519101018 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CB6C3FA27426B45777916684 /* Pods-CustomAlert.debug.xcconfig */,
+				5ECC0507A24F7CF4E630381D /* Pods-CustomAlert.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		55CF989CC0B7B8997FC5F02D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9804D2A34B50B3E90F62BB47 /* Pods_CustomAlert.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		68C22D7B2A93F52B001FFFD5 = {
 			isa = PBXGroup;
 			children = (
 				68C22D862A93F52B001FFFD5 /* CustomAlert */,
 				68C22D852A93F52B001FFFD5 /* Products */,
+				0CEE28E77C3D2BD519101018 /* Pods */,
+				55CF989CC0B7B8997FC5F02D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -94,9 +119,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 68C22D982A93F52C001FFFD5 /* Build configuration list for PBXNativeTarget "CustomAlert" */;
 			buildPhases = (
+				32D4FD761639A690E30949C6 /* [CP] Check Pods Manifest.lock */,
 				68C22D802A93F52B001FFFD5 /* Sources */,
 				68C22D812A93F52B001FFFD5 /* Frameworks */,
 				68C22D822A93F52B001FFFD5 /* Resources */,
+				5CD92E0845C0F518E4C231FB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -123,7 +150,7 @@
 				};
 			};
 			buildConfigurationList = 68C22D7F2A93F52B001FFFD5 /* Build configuration list for PBXProject "CustomAlert" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -152,6 +179,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		32D4FD761639A690E30949C6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CustomAlert-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5CD92E0845C0F518E4C231FB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CustomAlert/Pods-CustomAlert-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CustomAlert/Pods-CustomAlert-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CustomAlert/Pods-CustomAlert-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		68C22D802A93F52B001FFFD5 /* Sources */ = {
@@ -306,6 +375,7 @@
 		};
 		68C22D992A93F52C001FFFD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB6C3FA27426B45777916684 /* Pods-CustomAlert.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -334,6 +404,7 @@
 		};
 		68C22D9A2A93F52C001FFFD5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5ECC0507A24F7CF4E630381D /* Pods-CustomAlert.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

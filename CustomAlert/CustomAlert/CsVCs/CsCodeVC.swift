@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class CsCodeVC: useDimBgVC {
     
@@ -46,6 +47,14 @@ class CsCodeVC: useDimBgVC {
         setView()
         view.backgroundColor = .clear
     }
+    
+    //override func viewDidAppear(_ animated: Bool) {
+    //    super.viewDidAppear(animated)
+    //    contTitMstView.snp.updateConstraints { make in
+    //        make.height.equalTo(lblMsg.frame.maxY)
+    //    }
+    //    super.updateViewConstraints()
+    //}
     
     override func setView(fcn: String = #function, lne: Int = #line, spot: String = #fileID) {
         super.setView(fcn: fcn, lne: lne, spot: spot)
@@ -121,6 +130,49 @@ class CsCodeVC: useDimBgVC {
             tblView.heightAnchor.constraint(equalToConstant: tvHeight)
         ])
         
+        //containerView.snp.makeConstraints { make in
+        //    make.centerX.equalToSuperview()
+        //    make.width.equalTo(view.frame.width * contV_WidthRatio)
+        //    make.centerY.equalToSuperview()
+        //
+        //    make.height.greaterThanOrEqualTo(view.frame.height * 0.5)
+        //    make.height.lessThanOrEqualTo(view.frame.height * 0.05)
+        //}
+        //
+        //contTitMstView.snp.makeConstraints { make in
+        //    make.leading.equalToSuperview()
+        //    make.trailing.equalToSuperview()
+        //    make.top.equalTo(containerView).offset(16)
+        //    make.height.equalTo(lblMsg)
+        //}
+        //
+        //scrWithTitleMsg.snp.makeConstraints { make in
+        //    make.leading.equalTo(contTitMstView).offset(16)
+        //    make.trailing.equalTo(contTitMstView).offset(-16)
+        //    make.top.equalTo(contTitMstView)
+        //    make.bottom.equalTo(contTitMstView)
+        //}
+        //
+        //lblTitle.snp.makeConstraints { make in
+        //    make.leading.trailing.width.equalTo(contTitMstView)
+        //    make.top.equalTo(scrWithTitleMsg)
+        //}
+        
+        //lblMsg.snp.makeConstraints { make in
+        //    make.leading.equalTo(scrWithTitleMsg)
+        //    make.trailing.equalTo(scrWithTitleMsg)
+        //    make.top.equalTo(lblTitle).offset(16)
+        //    make.bottom.equalTo(scrCL).offset(-16)
+        //}
+        
+        //tblView.snp.makeConstraints { make in
+        //    make.leading.equalTo(containerView)
+        //    make.trailing.equalTo(containerView)
+        //    make.top.equalTo(contTitMstView).offset(16)
+        //    make.bottom.equalTo(containerView)
+        //    make.height.equalTo(tvHeight)
+        //}
+       
         
     }
     
