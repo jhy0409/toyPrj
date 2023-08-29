@@ -98,8 +98,15 @@ class ViewController: UIViewController {
             present(csCodeVC, animated: true)
             
         case .csSfUi:
-            var rootVC      = CsSfUiVC()
-            rootVC.artTp    = artTp
+            var rootVC          = CsSfUiVC()
+            rootVC.artTp        = artTp
+            var tmpbtnTitArr: [btnTitle] = []
+            for (i, _) in tblArr.enumerated() {
+                let item = btnTitle(idx: "\(String(describing: i))")
+                tmpbtnTitArr.append(item)
+            }
+            
+            rootVC.btnTitArr = tmpbtnTitArr
             
             let hostVC = UIHostingController(rootView: rootVC)
             hostVC.sizingOptions          = .preferredContentSize
