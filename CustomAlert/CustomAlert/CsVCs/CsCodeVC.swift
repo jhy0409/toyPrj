@@ -60,20 +60,9 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         return viewHeight * (1.0 - csXViewNums.tblDefRatio)
     }
     
-    var lblTitleHeight: CGFloat = 20 {
-        willSet {
-            let height: CGFloat         = lblMsg.frame.maxY
-            let resHeight: CGFloat      = height > mxHeight ? mxHeight : height
-            contTitMstViewHeight?.update(inset: resHeight)
-            
-            let remainHgt: CGFloat      = viewHeight - resHeight
-            tvHeight?.update(offset: remainHgt - tblHeightVal < 0 ? remainHgt : tblHeightVal)
-            
-            view.layoutIfNeeded()
-            
-        }
+    var lblMsgMaxY: CGFloat {
+        return lblMsg.frame.maxY
     }
-    
     
     
     // MARK: ------------------- Variables -------------------
@@ -93,8 +82,21 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        lblTitleHeight = lblMsg.frame.maxY
         
+        let resHeight: CGFloat  = lblMsgMaxY > mxHeight ? mxHeight : lblMsgMaxY
+        contTitMstViewHeight?.update(inset: resHeight)
+        
+        let exceptTitlMsg: CGFloat  = viewHeight - resHeight - 32
+        let remainHgt: CGFloat      = exceptTitlMsg - tblHeightVal < 0 ? mnHeight : tblHeightVal
+        tvHeight?.update(offset: remainHgt)
+        
+        ctTopBtm?.update(inset: ((view.frame.height - resHeight - remainHgt) / 2) - 16 )
+        
+        view.layoutIfNeeded()
+    }
+    
+    deinit {
+        print("--> \(self.description.flName) deinit\n")
     }
     
     override func setView(fcn: String = #function, lne: Int = #line, spot: String = #fileID) {
@@ -130,6 +132,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         for (i, lbl) in [lblTitle, lblMsg].enumerated() {
             lbl.textAlignment = .center
             lbl.numberOfLines = 0
+            lbl.sizeToFit()
             
             lbl.setContentHuggingPriority( i < 1 ? .defaultHigh : .defaultLow, for: .vertical)
         }
@@ -141,14 +144,14 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
             make.centerX.equalToSuperview()
             make.width.equalTo(view.frame.width * contV_WidthRatio)
             make.centerY.equalTo(view.snp.centerY)
-            make.top.bottom.greaterThanOrEqualTo(view).inset(defMrgVti / 2)
+            self.ctTopBtm = make.top.bottom.greaterThanOrEqualTo(view).inset(defMrgVti / 2).constraint
         }
         
         contTitMstView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(containerView)
             make.top.equalTo(containerView).inset(16)
             
-            self.contTitMstViewHeight = make.height.equalTo(isTblHide ? viewHeight : mxHeight).priority(.high).constraint
+            self.contTitMstViewHeight = make.height.equalTo(isTblHide ? viewHeight : mxHeight).priority(.required).constraint
         }
         
         scrWithTitleMsg.snp.makeConstraints { make in
@@ -252,6 +255,10 @@ class CsCodeTVC: CommonTvc {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        csCodeVC = nil
+    }
+    
+    deinit {
         csCodeVC = nil
     }
     

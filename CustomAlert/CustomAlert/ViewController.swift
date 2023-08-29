@@ -44,22 +44,22 @@ class ViewController: UIViewController {
     
     // MARK: ------------------- IBAction functions -------------------
     @objc func btnAlrtAction(_ sender: UIButton) {
-        guard var title = sender.configuration?.title,
-              var ttSbtr = title.split(separator: ".").first,
+        guard let title = sender.configuration?.title,
+              let ttSbtr = title.split(separator: ".").first,
               let style = alrtStyle(rawValue: title) else { return }
         
         print("--> \(title) tag = \(sender.tag) / in btnAlrtAction\n")
         artActs.removeAll()
         
-        // 여러줄 확인 / let > var 2ea : ttSbtr, title
-        for _ in 0...2 {
-            ttSbtr.append(contentsOf: ttSbtr)
-            ttSbtr.append(contentsOf: ttSbtr)
-            ttSbtr.append(contentsOf: ttSbtr)
-        
-            title.append(title)
-            title.append(title)
-        }
+        //// 여러줄 확인 / let > var 2ea : ttSbtr, title
+        //for _ in 0...2 {
+        //    ttSbtr.append(contentsOf: ttSbtr)
+        //    ttSbtr.append(contentsOf: ttSbtr)
+        //    ttSbtr.append(contentsOf: ttSbtr)
+        //
+        //    title.append(title)
+        //    title.append(title)
+        //}
         
         let ttStr   = String(describing: ttSbtr)
         artTp       = ("\(ttStr)", "\(title)")

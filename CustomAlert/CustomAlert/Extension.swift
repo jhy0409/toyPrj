@@ -91,7 +91,13 @@ extension String {
         return res
     }
     
-    
+    var flName: String {
+        var res: String = ""
+        
+        res = String(describing: self.split(separator: ":").first?.split(separator: ".").last ?? "")
+        
+        return res 
+    }
 }
 
 class CommonTvc: UITableViewCell {
