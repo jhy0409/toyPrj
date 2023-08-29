@@ -98,12 +98,15 @@ class ViewController: UIViewController {
             present(csCodeVC, animated: true)
             
         case .csSfUi:
-            let csSfUiVc = UIHostingController(rootView: CsSfUiVC())
-            csSfUiVc.sizingOptions          = .preferredContentSize
-            csSfUiVc.modalPresentationStyle = .overFullScreen
-            csSfUiVc.view.backgroundColor   = .clear
+            var rootVC      = CsSfUiVC()
+            rootVC.artTp    = artTp
             
-            present(csSfUiVc, animated: true)
+            let hostVC = UIHostingController(rootView: rootVC)
+            hostVC.sizingOptions          = .preferredContentSize
+            hostVC.modalPresentationStyle = .overFullScreen
+            hostVC.view.backgroundColor   = .clear
+            
+            present(hostVC, animated: true)
         }
     }
     
