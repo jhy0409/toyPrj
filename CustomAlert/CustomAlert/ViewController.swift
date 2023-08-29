@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ViewController: UIViewController {
 
@@ -97,7 +98,12 @@ class ViewController: UIViewController {
             present(csCodeVC, animated: true)
             
         case .csSfUi:
-            break
+            let csSfUiVc = UIHostingController(rootView: CsSfUiVC())
+            csSfUiVc.sizingOptions          = .preferredContentSize
+            csSfUiVc.modalPresentationStyle = .overFullScreen
+            csSfUiVc.view.backgroundColor   = .clear
+            
+            present(csSfUiVc, animated: true)
         }
     }
     
