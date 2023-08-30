@@ -38,21 +38,6 @@ class CsXibVC: useDimBgVC, PrBtnLayout {
     
     var artTp: (title: String, msg: String) = ("", "")
     
-    var lblTitleHeight: CGFloat = 20 {
-        willSet {
-            let defMrgVerti: CGFloat    = csXViewNums.defMrgVerti * 2
-            let viewHeight: CGFloat     = view.frame.height - defMrgVerti
-            
-            let mxHeight: CGFloat       = viewHeight * csXViewNums.tblDefRatio
-            let height: CGFloat         = lblMsg.frame.maxY
-            
-            contV_titMsgHeight.constant = height > mxHeight ? mxHeight : height
-            
-            let remainHgt: CGFloat      = viewHeight - contV_titMsgHeight.constant
-            tvHeight.constant           = remainHgt - tblHeightVal < 0 ? remainHgt : tblHeightVal
-        }
-    }
-    
     
     // MARK: ------------------- View Life Cycle -------------------
     deinit {
@@ -63,13 +48,16 @@ class CsXibVC: useDimBgVC, PrBtnLayout {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        let defMrgVerti: CGFloat    = csXViewNums.defMrgVerti * 2
+        let viewHeight: CGFloat     = view.frame.height - defMrgVerti
         
-        // 뷰 나타나고 나서 줄바꿈 된 높이 나와서 didAppear에서 세팅
-        lblTitleHeight = lblTitle.frame.height
+        let mxHeight: CGFloat       = viewHeight * csXViewNums.tblDefRatio
+        let height: CGFloat         = lblMsg.sizeThatFits(lblMsg.frame.size).height + (12 * 3)
+        
+        contV_titMsgHeight.constant = height > mxHeight ? mxHeight : height
+        
+        let remainHgt: CGFloat      = viewHeight - contV_titMsgHeight.constant
+        tvHeight.constant           = remainHgt - tblHeightVal < 0 ? remainHgt : tblHeightVal
     }
     
     override func setView(fcn: String = #function, lne: Int = #line, spot: String = #fileID) {
@@ -86,6 +74,12 @@ class CsXibVC: useDimBgVC, PrBtnLayout {
         
         lblTitle.text   = artTp.title
         lblMsg.text     = artTp.msg
+        
+        [lblTitle, lblMsg].forEach {
+            if let lbl = $0 {
+                lbl.frame.size = lbl.sizeThatFits(lbl.frame.size)
+            }
+        }
         
         let lineView: UIView = .init()
         lineView.backgroundColor = .systemGray5

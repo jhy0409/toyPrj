@@ -140,7 +140,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         for (i, lbl) in [lblTitle, lblMsg].enumerated() {
             lbl.textAlignment = .center
             lbl.numberOfLines = 0
-            lbl.sizeToFit()
+            lbl.frame.size = lbl.sizeThatFits(scrWithTitleMsg.frame.size)
             
             lbl.setContentHuggingPriority( i < 1 ? .defaultHigh : .defaultLow, for: .vertical)
         }
@@ -151,7 +151,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         containerView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalTo(view.frame.width * contV_WidthRatio)
-            make.centerY.equalTo(view.snp.centerY)
+            make.centerY.equalTo(view.snp_centerYWithinMargins)
             self.ctTopBtm = make.top.bottom.greaterThanOrEqualTo(view).inset(defMrgVti / 2).constraint
         }
         
