@@ -184,6 +184,8 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
             make.height.equalTo(1)
         }
         
+        lineView.isHidden = calcCnt < 1
+        
         tblView.snp.makeConstraints { make in
             make.leading.trailing.equalTo(containerView)
             make.top.equalTo(contTitMstView.snp.bottom).offset(isTblHide ? 0 : 16)

@@ -62,9 +62,11 @@ struct CsSfUiVC: View, PrBtnLayout {
                 
                 List(btnTitArr) { item in
                     rowView(didAppear: $didAppear, btnIdxs: item.btnIdxs)
+                        .alignmentGuide(.listRowSeparatorLeading) { dms in
+                            return -dms.width
+                        }
                 }
                 .frame(height: tblCellIsOverView ? tblMxHeight : totalCellHgt )
-                .background(.red)
                 .listStyle(.plain)
                 
             }
