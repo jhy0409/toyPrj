@@ -87,6 +87,19 @@ class CsXibVC: useDimBgVC, PrBtnLayout {
         lblTitle.text   = artTp.title
         lblMsg.text     = artTp.msg
         
+        let lineView: UIView = .init()
+        lineView.backgroundColor = .systemGray5
+        view.addSubview(lineView)
+
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            lineView.leadingAnchor.constraint(equalTo: tblView.leadingAnchor),
+            lineView.trailingAnchor.constraint(equalTo: tblView.trailingAnchor),
+            lineView.topAnchor.constraint(equalTo: tblView.topAnchor),
+            lineView.heightAnchor.constraint(equalToConstant: 1),
+        ])
+        
+        tblView.separatorInset = .zero
     }
     
     
@@ -131,6 +144,8 @@ class CsXibTvc: CommonTvc {
     
     var isDefPair: btnLayout = .withinZroIdx
     var isLast: Bool = false
+    
+    let lineView: UIView = .init()
     
     weak var csXibVC: CsXibVC?
     
@@ -189,6 +204,17 @@ class CsXibTvc: CommonTvc {
             btnTitles[i].addTarget(csXibVC, action: #selector(csXibVC?.cellTabAct(_:)), for: .touchUpInside)
         }
         
+        addSubview(lineView)
+        lineView.backgroundColor = .systemGray5
+        lineView.isHidden = btnTitles[1].isHidden
+        lineView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            lineView.leadingAnchor.constraint(equalTo: btnTitles[1].leadingAnchor, constant: 0.5),
+            lineView.topAnchor.constraint(equalTo: btnTitles[1].topAnchor),
+            lineView.bottomAnchor.constraint(equalTo: btnTitles[1].bottomAnchor),
+            lineView.widthAnchor.constraint(equalToConstant: 1)
+        ])
         
     }
     

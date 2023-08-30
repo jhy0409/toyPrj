@@ -24,10 +24,18 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
     
     var contV_titMsgHeight: CGFloat = 89
     
+    var lineView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGray5
+        
+        return view
+    }()
+    
     var tblView: UITableView = {
       let view = UITableView()
         view.register(CsCodeTVC.self, forCellReuseIdentifier: "CsCodeTVC")
-        
+        view.separatorInset = .zero
         return view
     }()
     
@@ -104,6 +112,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         
         view.addSubview(containerView)
         containerView.addSubview(contTitMstView)
+        containerView.addSubview(lineView)
         containerView.addSubview(tblView)
         
         contTitMstView.addSubview(scrWithTitleMsg)
@@ -167,6 +176,12 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
             make.leading.trailing.equalTo(lblTitle)
             make.top.equalTo(lblTitle.snp.bottom).offset(16)
             make.bottom.equalTo(scrWithTitleMsg).offset(0)
+        }
+        
+        lineView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(containerView)
+            make.bottom.equalTo(tblView.snp.top)
+            make.height.equalTo(1)
         }
         
         tblView.snp.makeConstraints { make in
@@ -247,6 +262,14 @@ class CsCodeTVC: CommonTvc {
         return view
     }()
     
+    var lineView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGray5
+        
+        return view
+    }()
+    
     var isDefPair: btnLayout = .withinZroIdx
     
     var btnTitles: [UIButton] = []
@@ -271,6 +294,7 @@ class CsCodeTVC: CommonTvc {
         
         contentView.addSubview(stvHrz)
         stvHrz.addSubview(btn0)
+        stvHrz.addSubview(lineView)
         stvHrz.addSubview(btn1)
         
         stvHrz.snp.makeConstraints { make in
@@ -284,6 +308,12 @@ class CsCodeTVC: CommonTvc {
             if btnIdxs?.nxt == nil {
                 make.trailing.equalTo(stvHrz.snp.trailing)
             }
+        }
+        
+        lineView.snp.makeConstraints { make in
+            make.centerX.equalTo(stvHrz.snp.centerX)
+            make.width.equalTo(1)
+            make.top.bottom.equalTo(stvHrz)
         }
         
         btn1.snp.makeConstraints { make in
@@ -337,6 +367,8 @@ class CsCodeTVC: CommonTvc {
             }
             
             btnTitles[i].addTarget(csCodeVC, action: #selector(csCodeVC?.cellTabAct(_:)), for: .touchUpInside)
+            
+            lineView.isHidden = btnTitles[1].isHidden
         }
     }
 }
