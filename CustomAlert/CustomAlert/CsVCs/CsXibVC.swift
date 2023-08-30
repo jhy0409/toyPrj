@@ -93,6 +93,7 @@ class CsXibVC: useDimBgVC, PrBtnLayout {
             lineView.heightAnchor.constraint(equalToConstant: 1),
         ])
         
+        lineView.isHidden = btnTitleArr.count < 1
         tblView.separatorInset = .zero
     }
     
