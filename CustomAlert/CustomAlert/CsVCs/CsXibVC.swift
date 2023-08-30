@@ -111,7 +111,6 @@ extension CsXibVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CsXibTvc", for: indexPath) as! CsXibTvc
-        cell.backgroundColor    = .getRainb(idx: indexPath.row)
         cell.tag                = indexPath.row
         cell.isLast             = cell.tag == (btnTitleArr.count - 1)
         cell.isDefPair          = isDefPair
@@ -147,9 +146,7 @@ class CsXibTvc: CommonTvc {
         setView()
         
         let btnBgCol: UIColor   = .clear
-        let prevCol: UIColor    = .red.withAlphaComponent(0.3)
-        let nxtCol: UIColor     = .blue.withAlphaComponent(0.3)
-        
+        let prevCol: UIColor    = .clear, nxtCol: UIColor = .clear
         
         for i in 0..<btnTitles.count {
             // 초기화

@@ -116,8 +116,6 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         for (i, obj) in [containerView, contTitMstView, tblView, scrWithTitleMsg, scrWithTitleMsg, lblTitle, lblMsg].enumerated() {
             obj.translatesAutoresizingMaskIntoConstraints = false
             obj.tag = i
-            
-            obj.backgroundColor = .getRainb(idx: i)
         }
         
         containerView.alignment     = .fill
@@ -125,6 +123,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         containerView.axis          = .vertical
         containerView.spacing       = 0
         containerView.cornerRadi    = 15
+        containerView.backgroundColor = .white
         
         lblTitle.text   = artTp.title
         lblMsg.text     = artTp.msg
@@ -208,8 +207,6 @@ extension CsCodeVC: UITableViewDataSource, UITableViewDelegate {
         cell.isDefPair = isDefPair
         cell.csCodeVC = self
         
-        cell.backgroundColor = .getRainb(idx: indexPath.row)
-        
         let idxArr = getBtnIdxs(row: indexPath.row, calc: calcCnt, total: btnTitleArr.count)
         cell.setView(btnIdxs: idxArr)
         
@@ -236,6 +233,7 @@ class CsCodeTVC: CommonTvc {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.titleLabel?.numberOfLines = 0
+        view.setTitleColor(.black, for: .normal)
         
         return view
     }()
@@ -244,6 +242,7 @@ class CsCodeTVC: CommonTvc {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.titleLabel?.numberOfLines = 0
+        view.setTitleColor(.black, for: .normal)
         
         return view
     }()
@@ -297,8 +296,7 @@ class CsCodeTVC: CommonTvc {
         }
         
         let btnBgCol: UIColor   = .clear
-        let prevCol: UIColor    = .red.withAlphaComponent(0.3)
-        let nxtCol: UIColor     = .blue.withAlphaComponent(0.3)
+        let prevCol: UIColor    = .clear, nxtCol: UIColor = .clear
         
         for i in 0..<btnTitles.count {
             // 초기화
