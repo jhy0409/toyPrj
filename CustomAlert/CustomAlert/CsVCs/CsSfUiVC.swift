@@ -29,6 +29,10 @@ struct CsSfUiVC: View, PrBtnLayout {
     
     var artTp: (title: String, msg: String) = ("title title title ", "desc desc desc")
     
+    var tblCellIsOverView: Bool {
+        return viewSize.height - (viewSize.height * titMsgViewMax) - totalCellHgt < 0
+    }
+    
     var tblMxHeight: CGFloat {
         return viewSize.height * (1.0 - titMsgViewMax)
     }
@@ -46,7 +50,6 @@ struct CsSfUiVC: View, PrBtnLayout {
                 ScrollView(.vertical, showsIndicators: true) {
                     Text("\(artTp.title)")
                         .fontWeight(.bold)
-                        .foregroundColor(.pink)
                         .multilineTextAlignment(.center)
                         .padding(.top, 40)
                     
@@ -55,13 +58,13 @@ struct CsSfUiVC: View, PrBtnLayout {
                         .fontWeight(.regular)
                         .padding(.vertical, 10)
                         .padding(.horizontal, 25)
-                }.frame(maxHeight: viewSize.height * ( totalCellHgt > 0  ? titMsgViewMax : 0.2) )
+                }.frame(maxHeight: viewSize.height * ( tblCellIsOverView ? titMsgViewMax : 0.2) )
                 
                 List(btnTitArr) { item in
                     rowView(str: String(describing: item.idx))
                 }
                 // MARK: - [🔴] todo /// gdlk49
-                .frame(height: viewSize.height - titMsgViewMax - totalCellHgt > 0 ? tblMxHeight : totalCellHgt)
+                .frame(height: tblCellIsOverView ? tblMxHeight : totalCellHgt )
                 .background(.red)
                 .listStyle(.plain)
                 
@@ -83,7 +86,7 @@ struct CsSfUiVC: View, PrBtnLayout {
             }) {
                 Image(systemName: "xmark.circle")
                     .font(.system(size: 28, weight: .regular))
-                    .foregroundColor(.purple)
+                
             }.padding()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
