@@ -123,43 +123,55 @@ class ViewController: UIViewController {
             
             var tmpbtnTitArr: [btnTitle] = []
             
-            for i in 0..<calcCnt {
-                var item: btnTitle = .init()
-                
-                let arrCnt: Int = tblArr.count
-                
-                switch isDefPair {
+            if (isDefPair != .evenRng) || (isDefPair == .evenRng && tblArr.count < 3) {
+                for i in 0..<calcCnt {
+                    var item: btnTitle = .init()
                     
-                case .withinZroIdx:
-                    switch arrCnt {
-                    case 0: break
-                    case 1: item.btnIdxs = (0, nil)
-                    case 2: item.btnIdxs = (0, 1)
+                    let arrCnt: Int = tblArr.count
                     
-                    // 2개 이상부터는 채우기로
-                    default: item.btnIdxs = (i, nil)
+                    switch isDefPair {
+                        
+                    case .withinZroIdx:
+                        switch arrCnt {
+                        case 0: break
+                        case 1: item.btnIdxs = (0, nil)
+                        case 2: item.btnIdxs = (0, 1)
+                        
+                        // 2개 이상부터는 채우기로
+                        default: item.btnIdxs = (i, nil)
+                        }
+                        
+                    case .evenRng:
+                        switch arrCnt {
+                        case 0: break
+                        case 1: item.btnIdxs = (0, nil)
+                        case 2: item.btnIdxs = (0, 1)
+                        
+                        default: break
+                        }
+                         
+                    case .fullSize:
+                        switch arrCnt {
+                        case 0: break
+                        default: item.btnIdxs = (i, nil)
+                        }
                     }
                     
-                case .evenRng:
-                    switch arrCnt {
-                    case 0: break
-                    case 1: item.btnIdxs = (0, nil)
-                    case 2: item.btnIdxs = (0, 1)
-                    
-                    // MARK: - [🔴] todo /// gdlk49
-                    default:
-                        break
-                    }
-                     
-                case .fullSize:
-                    switch arrCnt {
-                    case 0: break
-                    default: item.btnIdxs = (i, nil)
-                    }
+                    tmpbtnTitArr.append(item)
                 }
                 
-                tmpbtnTitArr.append(item)
+            // 바둑판, 3개이상
+            } else {
+                // (0, 1) / (2, 3) / (4, 5) / (6, nil)
+                for i in 0..<calcCnt {
+                    var item: btnTitle = .init()
+                    let isLastIdx: Bool = (tblArr.count - 1) < ((2 * i) + 1)
+                    
+                    item.btnIdxs = (2 * i, isLastIdx ? nil : (2 * i) + 1)
+                    tmpbtnTitArr.append(item)
+                }
             }
+
             
             rootVC.btnTitArr = tmpbtnTitArr
             
