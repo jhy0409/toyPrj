@@ -184,18 +184,29 @@
                                     <constraint firstItem="CoB-4v-XPp" firstAttribute="height" secondItem="A5K-cY-9yw" secondAttribute="height" id="fJy-kb-Xjp"/>
                                 </constraints>
                             </stackView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3wH-e4-XMp">
+                                <rect key="frame" x="29.333333333333343" y="129" width="334.33333333333326" height="394"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="3wH-e4-XMp" firstAttribute="centerX" secondItem="zhB-fA-egd" secondAttribute="centerX" id="3dT-z3-zci"/>
                             <constraint firstItem="4xo-sd-Izl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="9D6-ZD-tSz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="4xo-sd-Izl" secondAttribute="bottom" constant="20" id="bcb-YQ-uqf"/>
                             <constraint firstItem="4xo-sd-Izl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="jXp-zX-JA6"/>
+                            <constraint firstItem="3wH-e4-XMp" firstAttribute="top" secondItem="zhB-fA-egd" secondAttribute="top" id="jXz-mm-ow1"/>
+                            <constraint firstItem="3wH-e4-XMp" firstAttribute="bottom" secondItem="zhB-fA-egd" secondAttribute="bottom" id="nxM-yN-Gd6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4xo-sd-Izl" secondAttribute="trailing" constant="16" id="tlL-HZ-adw"/>
+                            <constraint firstItem="3wH-e4-XMp" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.85" id="wrk-yn-ZoZ"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="btnPupMenu" destination="aGM-fn-khA" id="HFG-QS-2r7"/>
+                        <outlet property="lbl_emptyNotice" destination="3wH-e4-XMp" id="5nt-bM-V0M"/>
                         <outlet property="tblView" destination="zhB-fA-egd" id="BT6-nh-Cee"/>
                         <outletCollection property="btnAlrtArr" destination="CoB-4v-XPp" collectionClass="NSMutableArray" id="DGV-cj-8qs"/>
                         <outletCollection property="btnAlrtArr" destination="nlJ-sA-U96" collectionClass="NSMutableArray" id="8Vf-yT-CFV"/>

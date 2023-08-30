@@ -12,6 +12,8 @@ class ViewController: UIViewController {
 
     // MARK: ------------------- IBOutlets -------------------
     
+    @IBOutlet weak var lbl_emptyNotice: UILabel!
+    
     @IBOutlet weak var btnPupMenu: UIButton!
     
     @IBOutlet var btnAlrtArr: [UIButton]!
@@ -23,6 +25,23 @@ class ViewController: UIViewController {
     
     
     // MARK: ------------------- Variables -------------------
+    var noticeStr: String {
+        return """
+테이블 뷰에 추가된 셀 개수만큼
+알림창 스타일 버튼이 추가됩니다.
+
+1. 버튼 설명
++ : 알림창 버튼 개수 추가
+- : 알림창 버튼 추가된 개수에서 제거
+
+2. 알림창 스타일
+\(alrtStyle.basic.rawValue)
+\(alrtStyle.csXib.rawValue)
+\(alrtStyle.csCode.rawValue)
+\(alrtStyle.csSfUi.rawValue)
+"""
+    }
+    
     var isDefPair: btnLayout = .withinZroIdx {
         willSet {
             print("--> isDefPair didSet = \(newValue) / in viewCont\n")
@@ -226,6 +245,7 @@ class ViewController: UIViewController {
         }
         
         tblView.reloadData()
+        lbl_emptyNotice.isHidden = tblArr.count > 0
     }
     
     
@@ -248,22 +268,15 @@ class ViewController: UIViewController {
         }
         
         btnPupMenu.menu = UIMenu(children: btnLayouts)
+        
+        lbl_emptyNotice.text = noticeStr
+        lbl_emptyNotice.isHidden = tblArr.count > 0
     }
     
-    
+
     @IBAction func btnInfoAct(_ sender: UIButton) {
         artTp.title.removeAll()
-        artTp.msg = """
-1. 버튼 설명
-+ : 알림창 버튼 개수 추가
-- : 알림창 버튼 추가된 개수에서 제거
-
-2. 알림창 스타일
-\(alrtStyle.basic.rawValue)
-\(alrtStyle.csXib.rawValue)
-\(alrtStyle.csCode.rawValue)
-\(alrtStyle.csSfUi.rawValue)
-"""
+        artTp.msg = noticeStr
         showAlertVC(useDef: true)
     }
     
