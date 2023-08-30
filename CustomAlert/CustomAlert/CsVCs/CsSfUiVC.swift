@@ -45,7 +45,7 @@ struct CsSfUiVC: View, PrBtnLayout {
     var body: some View {
         
         ZStackLayout(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
-            VStack(spacing: 16) {
+            VStack(spacing: 0) {
                 
                 ScrollView(.vertical, showsIndicators: true) {
                     Text("\(artTp.title)")
@@ -59,20 +59,26 @@ struct CsSfUiVC: View, PrBtnLayout {
                         .padding(.vertical, 10)
                         .padding(.horizontal, 25)
                 }.frame(maxHeight: viewSize.height * ( tblCellIsOverView ? titMsgViewMax : 0.2) )
-                
+
+                if totalCellHgt > 0 {
+                    Divider()
+                }
                 List(btnTitArr) { item in
                     rowView(didAppear: $didAppear, btnIdxs: item.btnIdxs)
                         .alignmentGuide(.listRowSeparatorLeading) { dms in
                             return -dms.width
                         }
+                        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        .listRowBackground(Color.clear)
+                        .frame(height: 50)
                 }
                 .frame(height: tblCellIsOverView ? tblMxHeight : totalCellHgt )
                 .listStyle(.plain)
                 
             }
-            .frame(width: (viewSize.width * 0.65))
-            .padding(.vertical, 25)
-            .padding(.horizontal, 30)
+            .frame(width: (viewSize.width * 0.85))
+            //.padding(.vertical, 25)
+            //.padding(.horizontal, 30)
             .background(BlurView())
             .cornerRadius(25)
             
@@ -138,6 +144,7 @@ struct rowView: View {
             }
             
             if nxtStr.isEmpty == false {
+                Divider()
                 Button( nxtStr, action: {
                 })
                 .frame(maxWidth: .infinity)
