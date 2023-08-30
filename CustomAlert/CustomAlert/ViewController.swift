@@ -246,6 +246,10 @@ class ViewController: UIViewController {
         
         tblView.reloadData()
         lbl_emptyNotice.isHidden = tblArr.count > 0
+
+        if tblArr.count > 0 {
+            tblView.scrollToRow(at: .init(row: tblArr.count - 1, section: 0), at: .bottom, animated: true)
+        }
     }
     
     
