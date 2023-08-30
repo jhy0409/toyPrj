@@ -61,9 +61,8 @@ struct CsSfUiVC: View, PrBtnLayout {
                 }.frame(maxHeight: viewSize.height * ( tblCellIsOverView ? titMsgViewMax : 0.2) )
                 
                 List(btnTitArr) { item in
-                    rowView(str: String(describing: item.idx))
+                    rowView(btnIdxs: item.btnIdxs)
                 }
-                // MARK: - [🔴] todo /// gdlk49
                 .frame(height: tblCellIsOverView ? tblMxHeight : totalCellHgt )
                 .background(.red)
                 .listStyle(.plain)
@@ -105,16 +104,30 @@ struct CsSfUiVC: View, PrBtnLayout {
 }
 
 struct rowView: View {
-    var str: String
+    var btnIdxs: (prv: Int?, nxt: Int?)?
+    
+    var prvStr: String {
+        guard let prv = btnIdxs?.prv else { return "" }
+        return String(describing: prv)
+    }
+    
+    var nxtStr: String {
+        guard let nxt = btnIdxs?.nxt else { return "" }
+        return String(describing: nxt)
+    }
+    
+    
     var body: some View {
         HStack(alignment: .center) {
-            Button(str) {
-                print("--> tapped \(str)")
+            Button( prvStr ) {
+                print("--> tapped \(prvStr)")
             }.frame(maxWidth: .infinity)
             
-            Button(str) {
-                print("--> tapped \(str)")
-            }.frame(maxWidth: .infinity)
+            if nxtStr.isEmpty == false {
+                Button( nxtStr ) {
+                    print("--> tapped \(nxtStr)")
+                }.frame(maxWidth: .infinity)
+            }
         }
     }
 }
@@ -139,7 +152,7 @@ struct ContentView_Previews: PreviewProvider {
 
 struct btnTitle: Identifiable {
     var id = UUID()
-    var idx: String
+    var btnIdxs: (prv: Int?, nxt: Int?)?
 }
 
 extension View {

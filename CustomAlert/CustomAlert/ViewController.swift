@@ -32,6 +32,25 @@ class ViewController: UIViewController {
     var artTp: (title: String, msg: String) = ("", "")
     var artActs: [UIAlertAction] = []
     
+    var calcCnt: Int {
+        let cnt = tblArr.count
+        switch isDefPair {
+
+        case .withinZroIdx:
+            switch tblArr.count {
+            case 0: return 0
+            case 1...2: return 1
+            default: return cnt
+            }
+            
+        case .evenRng:
+            return (tblArr.count / 2) + (cnt % 2 == 0 ? 0 : 1)
+            
+        case .fullSize:
+            return cnt
+        }
+    }
+    
     // MARK: ------------------- View Life Cycle -------------------
     
     
@@ -100,9 +119,45 @@ class ViewController: UIViewController {
         case .csSfUi:
             var rootVC          = CsSfUiVC()
             rootVC.artTp        = artTp
+            rootVC.isDefPair    = isDefPair
+            
             var tmpbtnTitArr: [btnTitle] = []
-            for (i, _) in tblArr.enumerated() {
-                let item = btnTitle(idx: "\(String(describing: i))")
+            
+            for i in 0..<calcCnt {
+                var item: btnTitle = .init()
+                
+                let arrCnt: Int = tblArr.count
+                
+                switch isDefPair {
+                    
+                case .withinZroIdx:
+                    switch arrCnt {
+                    case 0: break
+                    case 1: item.btnIdxs = (0, nil)
+                    case 2: item.btnIdxs = (0, 1)
+                    
+                    // 2개 이상부터는 채우기로
+                    default: item.btnIdxs = (i, nil)
+                    }
+                    
+                case .evenRng:
+                    switch arrCnt {
+                    case 0: break
+                    case 1: item.btnIdxs = (0, nil)
+                    case 2: item.btnIdxs = (0, 1)
+                    
+                    // MARK: - [🔴] todo /// gdlk49
+                    default:
+                        break
+                    }
+                     
+                case .fullSize:
+                    switch arrCnt {
+                    case 0: break
+                    default: item.btnIdxs = (i, nil)
+                    }
+                }
+                
                 tmpbtnTitArr.append(item)
             }
             
