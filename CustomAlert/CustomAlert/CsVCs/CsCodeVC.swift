@@ -282,13 +282,18 @@ class CsCodeTVC: CommonTvc {
         
         btn0.snp.makeConstraints { make in
             make.leading.top.bottom.equalTo(stvHrz)
-            make.width.equalTo(stvHrz.snp.width).multipliedBy( btnIdxs?.nxt != nil ? 0.5 : 1.0 )
+            if btnIdxs?.nxt == nil {
+                make.trailing.equalTo(stvHrz.snp.trailing)
+            }
         }
         
         btn1.snp.makeConstraints { make in
             make.top.bottom.equalTo(stvHrz)
             make.leading.equalTo(btn0.snp.trailing)
             make.trailing.equalTo(stvHrz.snp.trailing)
+            if btnIdxs?.nxt != nil {
+                make.width.equalTo(btn0.snp.width).multipliedBy(1)
+            }
         }
         
         let btnBgCol: UIColor   = .clear
