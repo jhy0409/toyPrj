@@ -122,27 +122,36 @@ struct rowView: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            Button( prvStr ) {
+            Button(prvStr, action: {
+                
+            })
+            .frame(maxWidth: .infinity)
+            .onTapGesture {
                 print("--> tapped \(prvStr)")
                 didAppear = false
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     dismiss()
                 }
-            }.frame(maxWidth: .infinity)
+            }
             
             if nxtStr.isEmpty == false {
-                Button( nxtStr ) {
+                Button( nxtStr, action: {
+                })
+                .frame(maxWidth: .infinity)
+                .onTapGesture {
                     print("--> tapped \(nxtStr)")
                     didAppear = false
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         dismiss()
                     }
-                }.frame(maxWidth: .infinity)
+                }
             }
         }
     }
+    
+    
 }
 
 struct BlurView: UIViewRepresentable {
