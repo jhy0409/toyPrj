@@ -61,7 +61,7 @@ struct CsSfUiVC: View, PrBtnLayout {
                 }.frame(maxHeight: viewSize.height * ( tblCellIsOverView ? titMsgViewMax : 0.2) )
                 
                 List(btnTitArr) { item in
-                    rowView(btnIdxs: item.btnIdxs)
+                    rowView(didAppear: $didAppear, btnIdxs: item.btnIdxs)
                 }
                 .frame(height: tblCellIsOverView ? tblMxHeight : totalCellHgt )
                 .background(.red)
@@ -104,6 +104,9 @@ struct CsSfUiVC: View, PrBtnLayout {
 }
 
 struct rowView: View {
+    @Environment(\.dismiss) var dismiss
+    @Binding var didAppear: Bool
+    
     var btnIdxs: (prv: Int?, nxt: Int?)?
     
     var prvStr: String {
@@ -121,11 +124,21 @@ struct rowView: View {
         HStack(alignment: .center) {
             Button( prvStr ) {
                 print("--> tapped \(prvStr)")
+                didAppear = false
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    dismiss()
+                }
             }.frame(maxWidth: .infinity)
             
             if nxtStr.isEmpty == false {
                 Button( nxtStr ) {
                     print("--> tapped \(nxtStr)")
+                    didAppear = false
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        dismiss()
+                    }
                 }.frame(maxWidth: .infinity)
             }
         }
