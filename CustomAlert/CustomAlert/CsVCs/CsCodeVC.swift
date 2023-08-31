@@ -196,7 +196,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         
         if (tblHeightVal + topHgt) > viewHeight {
             // 테이블뷰 높이 먼저
-            let tblHgt = tblHeightVal - topHgt > 0 ? tblHeightVal : (mnHeight > tblHeightVal ? tblHeightVal : mnHeight)
+            let tblHgt = (viewHeight - topHgt) - tblHeightVal > 0 ? tblHeightVal : mnHeight
             tvHeight?.update(offset: tblHgt)
             
             contTitMstViewHeight?.update(offset: topHgt)

@@ -36,6 +36,38 @@ class CsXibVC: useDimBgVC, PrBtnLayout {
                                              defMrgVerti: view.frame.height * 0.05,
                                              tblDefRatio: tblHeightVal == 0 ? titMsgViewFull : titMsgViewMax)
     
+    /// 상하 마진
+    var defMrgVti: CGFloat {
+        return (csXViewNums.defMrgVerti * 2) 
+    }
+    
+    var viewHeight: CGFloat {
+        return view.frame.height - defMrgVti
+    }
+    
+    var mxHeight: CGFloat {
+        return viewHeight * csXViewNums.tblDefRatio
+    }
+    
+    var mnHeight: CGFloat {
+        if lblMsgMaxY + tblHeightVal > viewHeight {
+            let btmRt = topHgt/viewHeight > 1 ? (1.0 - csXViewNums.tblDefRatio) : 1 - (topHgt/viewHeight)
+            return viewHeight * btmRt
+            
+        } else {
+            return viewHeight * (1.0 - csXViewNums.tblDefRatio)
+        }
+    }
+    
+    var lblMsgMaxY: CGFloat {
+        return lblMsg.frame.maxY
+    }
+    
+    /// 상단 높이
+    var topHgt: CGFloat {
+        return lblMsgMaxY > mxHeight ? mxHeight : lblMsgMaxY
+    }
+    
     var artTp: (title: String, msg: String) = ("", "")
     
     
@@ -48,16 +80,19 @@ class CsXibVC: useDimBgVC, PrBtnLayout {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let defMrgVerti: CGFloat    = csXViewNums.defMrgVerti * 2
-        let viewHeight: CGFloat     = view.frame.height - defMrgVerti
         
-        let mxHeight: CGFloat       = viewHeight * csXViewNums.tblDefRatio
-        let height: CGFloat         = lblMsg.sizeThatFits(lblMsg.frame.size).height + (12 * 3)
         
-        contV_titMsgHeight.constant = height > mxHeight ? mxHeight : height
-        
-        let remainHgt: CGFloat      = viewHeight - contV_titMsgHeight.constant
-        tvHeight.constant           = remainHgt - tblHeightVal < 0 ? remainHgt : tblHeightVal
+        if (tblHeightVal + topHgt) > viewHeight {
+            // 테이블뷰 높이 먼저
+            let tblHgt = (viewHeight - topHgt) - tblHeightVal < 0 ? mnHeight : tblHeightVal
+
+            tvHeight.constant = tblHgt
+            contV_titMsgHeight.constant = topHgt
+            
+        } else {
+            contV_titMsgHeight.constant = lblMsgMaxY
+            tvHeight.constant = tblHeightVal
+        }
     }
     
     override func setView(fcn: String = #function, lne: Int = #line, spot: String = #fileID) {
