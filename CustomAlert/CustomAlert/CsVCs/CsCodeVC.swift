@@ -17,7 +17,6 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
     
     var containerView: UIStackView = .init()
     var contV_WidthRatio: CGFloat = 0.85
-    var ctTopBtm: Constraint?
     
     var contTitMstView: UIView = .init()
     var contTitMstViewHeight: Constraint?
@@ -65,11 +64,22 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
     }
     
     var mnHeight: CGFloat {
-        return viewHeight * (1.0 - csXViewNums.tblDefRatio)
+        if lblMsgMaxY + tblHeightVal > viewHeight {
+            let btmRt = topHgt/viewHeight > 1 ? (1.0 - csXViewNums.tblDefRatio) : 1 - (topHgt/viewHeight)
+            return viewHeight * btmRt
+            
+        } else {
+            return viewHeight * (1.0 - csXViewNums.tblDefRatio)
+        }
     }
     
     var lblMsgMaxY: CGFloat {
         return lblMsg.frame.maxY
+    }
+    
+    /// 상단 높이
+    var topHgt: CGFloat {
+        return lblMsgMaxY < mxHeight ? lblMsgMaxY : mxHeight
     }
     
     
@@ -86,22 +96,6 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         view.backgroundColor = .clear
     }
     
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        let resHeight: CGFloat  = lblMsgMaxY > mxHeight ? mxHeight : lblMsgMaxY
-        contTitMstViewHeight?.update(inset: resHeight)
-        
-        let exceptTitlMsg: CGFloat  = viewHeight - resHeight - 32
-        let remainHgt: CGFloat      = exceptTitlMsg - tblHeightVal < 0 ? mnHeight : tblHeightVal
-        tvHeight?.update(offset: remainHgt)
-        
-        ctTopBtm?.update(inset: ((view.frame.height - resHeight - remainHgt) / 2) - 16 )
-        
-        view.layoutIfNeeded()
-    }
     
     deinit {
         print("--> \(self.description.flName) deinit\n")
@@ -136,12 +130,11 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         
         lblTitle.text   = artTp.title
         lblMsg.text     = artTp.msg
+        let lblArr      = [lblTitle, lblMsg]
         
-        for (i, lbl) in [lblTitle, lblMsg].enumerated() {
+        for (i, lbl) in lblArr.enumerated() {
             lbl.textAlignment = .center
             lbl.numberOfLines = 0
-            lbl.frame.size = lbl.sizeThatFits(scrWithTitleMsg.frame.size)
-            
             lbl.setContentHuggingPriority( i < 1 ? .defaultHigh : .defaultLow, for: .vertical)
         }
         
@@ -152,7 +145,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
             make.centerX.equalToSuperview()
             make.width.equalTo(view.frame.width * contV_WidthRatio)
             make.centerY.equalTo(view.snp_centerYWithinMargins)
-            self.ctTopBtm = make.top.bottom.greaterThanOrEqualTo(view).inset(defMrgVti / 2).constraint
+            make.height.lessThanOrEqualTo(viewHeight)
         }
         
         contTitMstView.snp.makeConstraints { make in
@@ -193,6 +186,24 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
             
             self.tvHeight = make.height.equalTo(tblHeightVal).priority(.required).constraint
             make.height.lessThanOrEqualTo(mnHeight).priority(.required)
+        }
+        
+        view.layoutIfNeeded()
+        for i in lblArr {
+            i.frame.size = i.sizeThatFits(containerView.frame.size)
+        }
+   
+        
+        if (tblHeightVal + topHgt) > viewHeight {
+            // 테이블뷰 높이 먼저
+            let tblHgt = tblHeightVal - topHgt > 0 ? tblHeightVal : (mnHeight > tblHeightVal ? tblHeightVal : mnHeight)
+            tvHeight?.update(offset: tblHgt)
+            
+            contTitMstViewHeight?.update(offset: topHgt)
+            
+        } else {
+            contTitMstViewHeight?.update(offset: lblMsgMaxY)
+            tvHeight?.update(offset: tblHeightVal)
         }
         
     }
