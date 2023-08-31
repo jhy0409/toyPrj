@@ -106,10 +106,10 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         
         view.addSubview(containerView)
         containerView.addSubview(contTitMstView)
-        containerView.addSubview(lineView)
         containerView.addSubview(tblView)
         
         contTitMstView.addSubview(scrWithTitleMsg)
+        contTitMstView.addSubview(lineView)
         scrWithTitleMsg.addSubview(lblTitle)
         scrWithTitleMsg.addSubview(lblMsg)
         
@@ -172,8 +172,8 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         }
         
         lineView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(containerView)
-            make.bottom.equalTo(tblView.snp.top)
+            make.leading.trailing.equalTo(contTitMstView)
+            make.bottom.equalTo(contTitMstView).offset(16.5)
             make.height.equalTo(1)
         }
         
@@ -211,7 +211,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
     
     // MARK: ------------------- IBAction functions -------------------
     @objc func cellTabAct(_ sender: UIButton) {
-        print("--> cellTabAct tag = \(sender.tag) / CsCodeVC\n")
+        print("--> cellTabAct tag = \(sender.restorationIdentifier ?? "") / CsCodeVC\n")
         dismiss(animated: true)
     }
     
@@ -231,7 +231,7 @@ extension CsCodeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CsCodeTVC") as! CsCodeTVC
-        cell.tag = indexPath.row + 2
+        cell.tag = indexPath.row
         cell.isDefPair = isDefPair
         cell.csCodeVC = self
         
@@ -248,8 +248,8 @@ class CsCodeTVC: CommonTvc {
     
     var stvHrz: UIStackView = {
         let view = UIStackView()
-        view.distribution   = .fillEqually
-        view.alignment      = .center
+        view.distribution   = .fill
+        view.alignment      = .fill
         view.spacing        = 0
         view.axis           = .horizontal
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -283,9 +283,25 @@ class CsCodeTVC: CommonTvc {
         return view
     }()
     
+    var lineViewTp: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGray5
+        
+        return view
+    }()
+    
     var isDefPair: btnLayout = .withinZroIdx
     
-    var btnTitles: [UIButton] = []
+    var btnIdxs: (prv: Int?, nxt: Int?)?
+    
+    var nxtIsNil: Bool {
+        return btnIdxs?.nxt == nil
+    }
+    
+    var scrWidth: CGFloat {
+        return stvHrz.frame.width
+    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -300,15 +316,20 @@ class CsCodeTVC: CommonTvc {
     func setView(btnIdxs: (prv: Int?, nxt: Int?)?) {
         setView()
         
-        btnTitles = [btn0, btn1]
+        self.btnIdxs = btnIdxs
+        
+        let btnTitles = [btn0, btn1]
         for (i, btn) in btnTitles.enumerated() {
             btn.tag = i
+            btn.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            btn.clipsToBounds = false
         }
         
         contentView.addSubview(stvHrz)
-        stvHrz.addSubview(btn0)
-        stvHrz.addSubview(lineView)
-        stvHrz.addSubview(btn1)
+        stvHrz.addSubview(lineViewTp)
+        stvHrz.addArrangedSubview(btn0)
+        btn1.addSubview(lineView)
+        stvHrz.addArrangedSubview(btn1)
         
         stvHrz.snp.makeConstraints { make in
             make.top.bottom.equalTo(contentView)
@@ -316,26 +337,30 @@ class CsCodeTVC: CommonTvc {
             make.trailing.equalTo(contentView.snp.trailing).offset(-16)
         }
         
+        lineViewTp.snp.makeConstraints { make in
+            make.leading.trailing.top.equalTo(contentView).offset(1)
+            make.height.equalTo(1)
+        }
+        
+        lineViewTp.isHidden = tag > 0
+        
         btn0.snp.makeConstraints { make in
             make.leading.top.bottom.equalTo(stvHrz)
-            if btnIdxs?.nxt == nil {
-                make.trailing.equalTo(stvHrz.snp.trailing)
-            }
+            make.trailing.equalTo( nxtIsNil ? stvHrz.snp.trailing : btn1.snp.leading)
+            make.width.equalTo( nxtIsNil ? scrWidth : scrWidth / 2)
         }
         
         lineView.snp.makeConstraints { make in
-            make.centerX.equalTo(stvHrz.snp.centerX)
             make.width.equalTo(1)
-            make.top.bottom.equalTo(stvHrz)
+            make.top.bottom.equalTo(btn1)
+            make.leading.equalTo(btn1).inset(-0.5)
         }
         
         btn1.snp.makeConstraints { make in
             make.top.bottom.equalTo(stvHrz)
             make.leading.equalTo(btn0.snp.trailing)
             make.trailing.equalTo(stvHrz.snp.trailing)
-            if btnIdxs?.nxt != nil {
-                make.width.equalTo(btn0.snp.width).multipliedBy(1)
-            }
+            make.width.equalTo(btn0.snp.width).multipliedBy(!nxtIsNil ? 1 : 0)
         }
         
         let btnBgCol: UIColor   = .clear
@@ -353,7 +378,7 @@ class CsCodeTVC: CommonTvc {
                     switch i {
                     case 0:
                         if let first = idxs.prv {
-                            btnTitles[i].tag = first
+                            btnTitles[i].restorationIdentifier = String(describing: first)
                             btnTitles[i].backgroundColor = prevCol
                             
                             btnTitles[i].setTitle(String(describing: first), for: .normal)
@@ -361,7 +386,7 @@ class CsCodeTVC: CommonTvc {
                         
                     case 1:
                         if let second = idxs.nxt {
-                            btnTitles[i].tag = second
+                            btnTitles[i].restorationIdentifier = String(describing: second)
                             btnTitles[i].backgroundColor = nxtCol
                             
                             btnTitles[i].setTitle(String(describing: second), for: .normal)
