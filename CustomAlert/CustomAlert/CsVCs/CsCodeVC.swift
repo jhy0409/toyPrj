@@ -128,6 +128,7 @@ class CsCodeVC: useDimBgVC, PrBtnLayout {
         containerView.cornerRadi    = 15
         containerView.backgroundColor = .white
         
+        lblTitle.font   = .systemFont(ofSize: 17, weight: .bold)
         lblTitle.text   = artTp.title
         lblMsg.text     = artTp.msg
         let lblArr      = [lblTitle, lblMsg]
