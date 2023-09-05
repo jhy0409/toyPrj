@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>variants</key>
+	<dict>
+		<key>CustomAlert-BBEDD3A9-214F-4442-888F-6D7E86B2E59A.ipa</key>
+		<dict>
+			<key>limitUncompressedInitialPrefetchedODR</key>
+			<integer>2147483648</integer>
+			<key>onDemandResourcesAssetPacks</key>
+			<dict/>
+			<key>sizeCompressedApp</key>
+			<integer>247117</integer>
+			<key>sizeCompressedAppAndODR</key>
+			<integer>247117</integer>
+			<key>sizeCompressedODR</key>
+			<integer>0</integer>
+			<key>sizeUncompressedApp</key>
+			<integer>805245</integer>
+			<key>sizeUncompressedAppAndODR</key>
+			<integer>805245</integer>
+			<key>sizeUncompressedInitialPrefetchedODR</key>
+			<integer>0</integer>
+			<key>sizeUncompressedInitialPrefetchedODRExceedsLimit</key>
+			<false/>
+			<key>sizeUncompressedODR</key>
+			<integer>0</integer>
+			<key>tagsUncompressedInitialPrefetchedODR</key>
+			<array/>
+			<key>variantDescriptors</key>
+			<array>
+				<dict>
+					<key>device</key>
+					<string>iPhone12,1</string>
+					<key>os-version</key>
+					<string>16.0</string>
+				</dict>
+				<dict>
+					<key>device</key>
+					<string>iPhone11,8</string>
+					<key>os-version</key>
+					<string>16.0</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+</dict>
+</plist>

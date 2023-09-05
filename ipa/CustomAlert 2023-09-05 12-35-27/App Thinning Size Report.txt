@@ -1,0 +1,8 @@
+
+App Thinning Size Report for All Variants of CustomAlert
+
+Variant: CustomAlert-BBEDD3A9-214F-4442-888F-6D7E86B2E59A.ipa
+Supported variant descriptors: [device: iPhone12,1, os-version: 16.0] and [device: iPhone11,8, os-version: 16.0]
+App + On Demand Resources size: 247 KB compressed, 805 KB uncompressed
+App size: 247 KB compressed, 805 KB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
