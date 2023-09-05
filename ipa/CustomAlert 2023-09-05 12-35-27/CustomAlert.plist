@@ -12,7 +12,7 @@
 						<string>software-package</string>
 						<-- ipa가 업로드 되어 있는 URL -->
 							<key>url</key>
-							<string>https://myApp.download.com/myApp.ipa</string>
+							<string>https://github.com/jhy0409/toyPrj_customAlert/blob/main/ipa/CustomAlert%202023-09-05%2012-35-27/CustomAlert-BBEDD3A9-214F-4442-888F-6D7E86B2E59A.ipa</string>
 					</dict>
 				</array>
 				<key>metadata</key>
